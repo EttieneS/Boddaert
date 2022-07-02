@@ -28,9 +28,8 @@ $('document').ready(function(){
 });
 
 function editUser(user){
-  localStorage.setItem("userid", user['id']);
-  localStorage.setItem("user", user);
+  localStorage.setItem("id", user['id']);
+  localStorage.setItem("username", user['username']);
 
-  //alert("userid " + user['userid']);
   window.location = "edit.php";
 }

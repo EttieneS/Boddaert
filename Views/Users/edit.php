@@ -2,6 +2,7 @@
   echo "<h3>Edit User</h3>
         <link rel='stylesheet' href='../../assets/bootstrap/css/bootstrap.css'>
         <form id='editUserForm'>
+          <input id='id' name='id' style='display: none'>
           <label>User Name</label>
           <input id='username' name='username'>
         </form>

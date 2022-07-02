@@ -1,11 +1,9 @@
 $('document').ready(function(){
   var userid = localStorage.getItem("id");
-  var user = localStorage.getItem("user")
+  var username = localStorage.getItem("username")
 
-  var username = user['username'];
-  alert("usermodel name " + user.username);
-
-  $('#username').val("bonobo");
+  $('id').val(userid);
+  $('#username').val(username);
 
   // $.ajax({
   //   url: "../../Controllers/usercontroller.php",
