@@ -29,4 +29,22 @@
     $jsonUsers = json_encode($users);
     echo $jsonUsers;
   }
+
+  if ($_POST['action'] == "update"){
+    $userdata = $_POST['user'];
+    //print_r($userdata);
+    $user = new User();
+
+    $response = $user->Update($userdata);
+    echo $response;
+  }
+
+  if ($_POST['action'] == "delete"){
+    $userdata = $_POST['user'];
+
+    $user = new User();
+
+    $response = $user->Delete($userdata);
+    echo $response;
+  }
 ?>

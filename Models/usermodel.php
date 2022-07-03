@@ -8,7 +8,7 @@
 
     function Add($userdata) {
       $username = $userdata[0]['value'];
-      $password = $userdata[0]['value'];
+      $password = $userdata[1]['value'];
 
       $sql = "INSERT INTO
         users
@@ -17,18 +17,12 @@
         ('$username', '$password')";
 
       $result = runSQL($sql);
-      print_r($result);
+      echo $result;
     }
 
     function Validate($userdata){
       $username = $userdata[0]['value'];
       $password = $userdata[0]['value'];
-
-      // $sql = "SELECT * FROM
-      //   users
-      //   WHERE
-      //   username = '$username' AND
-      //   password = '$password')";
 
       $sql= "SELECT 1 FROM
           users
@@ -57,15 +51,40 @@
       $sql = "SELECT * FROM
         users";
 
-      $users = mySQLI($sql);
+      $users = runSQL($sql);
 
       while($row = $users->fetch_assoc())
       {
         $rows[] = $row;
       }
-      
-      // $jsonObj = json_encode($users);
+
       return $rows;
+    }
+
+    function Update($userdata) {
+      $userid = $userdata[0]['value'];
+      $username = $userdata[1]['value'];
+
+      $sql = "UPDATE users SET
+        username = '$username'
+        WHERE
+        id = '$userid'";
+
+      $result = runSQL($sql);
+
+      echo $result;
+    }
+
+    function Delete($userdata) {
+      $id = $userdata['id'];
+      
+      $sql = "DELETE FROM
+        users
+        WHERE
+        (id = '$id')";
+
+      $result = runSQL($sql);
+      echo $result;
     }
   }
 ?>

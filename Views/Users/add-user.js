@@ -10,7 +10,6 @@ function Add(){
     },
     type: "application/json",
     success: function(response) {
-
         alert(response);
     },
     error: function(jqXHR, textStatus, errorThrown){

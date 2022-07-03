@@ -5,6 +5,7 @@
           <input id='id' name='id' style='display: none'>
           <label>User Name</label>
           <input id='username' name='username'>
+          <button type='button' class='btn btn-primary' id='updateBtn' name='updateBtn' onclick='update()'>Update</button>
         </form>
         <script src='../../assets/jquery.js'></script>
         <script src='../../assets/popper.js'></script>
