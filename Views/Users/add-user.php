@@ -17,6 +17,5 @@
   </form>
   <script src='add-user.js'></script>
   <script src='../assets/jquery.js'></script>
-  <script src='../assets/popper.js'></script>
-  <script src='../assets/bootstrap/js/bootstrap.bundle.min.js'></script>";
+  <script src='../assets/bootstrap/js/bootstrap.min.js'></script>";
 ?>

@@ -1,9 +1,9 @@
 $('document').ready(function(){
-  $('#userstable').DataTable({
+  $('#horsestable').DataTable({
       "processing" : true,
       "serverside": true,
       "ajax" : {
-          "url" : "../../controllers/usercontroller.php",
+          "url" : "../../controllers/horsecontroller.php",
           "data": {
             action: 'viewall'
           },
@@ -12,19 +12,32 @@ $('document').ready(function(){
           "order": [[0, "asc"]]
       },
       "columns" : [{
-          "data" : "username"
+          "data" : "name"
       }, {
         "render": function(data, type, full){
-          user = {
+          horse = {
             "id" : full['id'],
-            "username": full['username']
+            "username": full['name']
           }
-          return '<a style="display: inline"><button type="button" class="btn btn-primary float-left" onclick=editUser(' +JSON.stringify(user)+ ')>Edit</button></a>' +
-            '<a style="display: inline"><button type="button" class="btn btn-danger float-right" onclick=deleteUser(' +JSON.stringify(user)+ ')>Delete</button></a>';
+          return '<a style="display: inline"><button type="button" class="btn btn-primary float-left" onclick=editUser(' +JSON.stringify(horse)+ ')>Edit</button></a>' +
+            '<a style="display: inline"><button type="button" class="btn btn-danger float-right" onclick=deleteUser(' +JSON.stringify(horse)+ ')>Delete</button></a>' +
+            '<a style="display: inline"><button type="button" class="btn btn-danger float-right" onclick=selectHorse(' +JSON.stringify(horse)+ ')>Select</button></a>';
         }
       }]
   });
 });
+var selection;
+var selectionarray;
+
+function selectHorse(horse){
+  var id = horse.id;
+  alert("horseid " + id);
+  //selectionarray.push(id);
+}
+
+function saveSelection() {
+  console.log(selectionarray);
+}
 
 function editUser(user){
   localStorage.setItem("id", user['id']);

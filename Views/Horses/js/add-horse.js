@@ -1,16 +1,12 @@
-$(document).ready(function(){
-       $('.dropdown-toggle').dropdown()
-});
-
 function Add(){
-  var user = $('#addUserForm').serializeArray();
+  var horse = $('#addHorseForm').serializeArray();
 
   $.ajax({
-    url: "../../Controllers/usercontroller.php",
+    url: "../../Controllers/horsecontroller.php",
     method: 'post',
     data: {
       action: 'add',
-      user: user
+      horse: horse
     },
     type: "application/json",
     success: function(response) {

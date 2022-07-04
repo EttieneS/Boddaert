@@ -8,8 +8,8 @@
       <div>
         <a href='view-all.php'>View Users</a>
         <a href='add-user.php'>Add user</a>
-        <a href='./Views/Horses/view-all.php'>View Users</a>
-        <a href='./Views/Horses/add-horse.php'>Add user</a>
+        <a href='../Horses/view-all.php'>View Horses</a>
+        <a href='../Horses/add-horse.php'>Add </a>
       </div>
     </div>
   </nav>"
