@@ -1,3 +1,7 @@
+$(document).ready(function(){
+       $('.dropdown-toggle').dropdown()
+});
+
 function Add(){
   var user = $('#addUserForm').serializeArray();
 
