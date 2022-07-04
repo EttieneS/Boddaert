@@ -1,5 +1,5 @@
 <?php
-  //require_once("../../../../config.php");
+  require_once("../../../config.php");
 
   class User {
     var $username="";
@@ -7,7 +7,7 @@
 
     function __construct() {}
 
-    function createUserTable() {
+    function createAddUserTable() {
       $table = "<form method='post'>
                   <div>
                     <label>User Name</label>
@@ -17,7 +17,11 @@
                     <label>Password</label>
                     <input id='password' name='password' type='text' />
                   </div>
-                </form>"
+                  <div>
+                    <button type='submit' value='' class='btn btn-primary'>Save User</button>
+                  </div>
+                </form>";
+      echo $table;
     }
 
     function Validate($userdata){
@@ -34,21 +38,15 @@
       $result = runSQL($sql);
 
       if (empty($result)) {
-        //echo "false";
         $false = json_encode(false);
         return $false;
       } else {
         $true = json_encode(true);
-        //echo "true";
         return $true;
       }
-
-      // $print = print_r("Validate result " .$result);
-      // return $print;
     }
 
-    function getAllUsers()
-    {
+    function getAllUsers(){
       $sql = "SELECT * FROM
         users";
 
@@ -57,7 +55,6 @@
       $usertable = "<table>";
 
       while($row = $users->fetch_assoc()){
-        //$rows[] = $row;
         $username = $row['username'];
         $usertable .= "<tr>
                         <td>$username</td>
@@ -70,6 +67,21 @@
                     </form>";
 
       echo $usertable;
+    }
+
+    function Add($userdata) {
+      $username = $userdata['username'];
+      $password = $userdata['password'];
+
+      echo ('username ' . $username);
+      $sql = "INSERT INTO
+        users
+        (username, password)
+        VALUES
+        ('$username', '$password')";
+
+      $result = runSQL($sql);
+      echo $result;
     }
 }
 ?>
