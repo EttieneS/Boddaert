@@ -9,7 +9,7 @@
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
       exit();
     }
-    
+
     $result = $mysqli -> query($sql);
     if (!($result)){
       echo ($mysqli->connect_error);
@@ -38,6 +38,6 @@
     }
 
     $conn->close();
-    return $result->fetch_assoc();
+    return $result;
   }
 ?>

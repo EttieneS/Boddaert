@@ -12,6 +12,7 @@ function Login(){
     },
     success: function(response) {
       if (response != "true") {
+        alert(response);
         alert("Invalid username or password");
       } else {
         window.location.href = "./admin/Modules/Users/index.php";
@@ -19,4 +20,3 @@ function Login(){
     }
   });
 }
-

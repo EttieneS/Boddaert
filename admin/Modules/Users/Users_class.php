@@ -1,5 +1,5 @@
 <?php
-  require_once("../../../config.php");
+  require_once("../../../../config.php");
 
   class User {
     var $username="";
@@ -43,6 +43,7 @@
 
       $arrHeadings = array("id","username");
       $result = runSQL($sql);
+
       echo '<pre>'.print_r($result,true).'</pre>';
       echo "<table class='table table-striped'>";
       echo "<thead>";
@@ -51,13 +52,27 @@
       }
        echo"</thead>";
 
-      foreach($result as $res){
-        echo "<tr>";
-        foreach($arrHeadings as $heading){
-          echo "<td>".$res[$heading]."</td>";
-        }
-        echo "</tr>";
-      }
+       while ($row = $result->fetch_assoc()){
+         echo "<tr>";
+           foreach($arrHeadings as $heading){
+             // if($value[$heading] != ""){
+               // echo "<td>".$res[$heading]."</td>";
+               echo "<td>". $row[$heading] ."</td>";
+             // }
+         }
+         echo "</tr>";
+       }
+      // foreach($result){
+      //   echo "<tr>";
+      //   //echo "<td>" .$res . "</td>";
+      //   foreach($arrHeadings as $heading){
+      //     //if($value[$heading] != ""){
+      //       // echo "<td>".$res[$heading]."</td>";
+      //       echo "<td>". $res[$heading] ."</td>";
+      //     }
+      //   // }
+      //   echo "</tr>";
+      // }
     }
 
     function Add($userdata) {

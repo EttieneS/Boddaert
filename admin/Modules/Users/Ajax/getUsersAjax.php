@@ -8,7 +8,8 @@
     if($res){
       echo "true";
     }else{
-      echo "false";
+      //echo "false";
+      echo "<pre>print_r($res)</pre>";
     }
   }
 ?>
