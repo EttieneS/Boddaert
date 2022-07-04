@@ -1,27 +1,22 @@
-function Login() {
-  console.log("login");
-
-  var user = $('#loginForm').serializeArray();
+function Login(){
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
 
   $.ajax({
-    url: "./admin/Modules/Users/Ajax/users_ajax.php",
+    url: "../Boddaert/admin/Modules/Users/Ajax/getUsersAjax.php",
     method: 'post',
     data: {
-      action: 'login',
-      user: user
+      action:'login',
+      username:username,
+      password:password
     },
-    type: "application/json",
     success: function(response) {
-      alert(response);
-        
       if (response != "true") {
         alert("Invalid username or password");
       } else {
         window.location.href = "./admin/Modules/Users/index.php";
       }
-    },
-    error: function(jqXHR, textStatus, errorThrown){
-      alert("error");
     }
   });
 }
+

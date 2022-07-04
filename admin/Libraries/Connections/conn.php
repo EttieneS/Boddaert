@@ -38,6 +38,6 @@
     }
 
     $conn->close();
-    return $result;
+    return $result->fetch_assoc();
   }
 ?>

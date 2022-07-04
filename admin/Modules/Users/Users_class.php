@@ -24,49 +24,40 @@
       echo $table;
     }
 
-    function Validate($userdata){
-      $username = $userdata[0]['value'];
-      $password = $userdata[0]['value'];
+    function Validate($username,$password){
 
-      $sql= "SELECT 1 FROM
-          users
-          WHERE
-          username = '$username'
-          AND
-          password = '$password'";
+      $sql= "SELECT * FROM users
+             WHERE username = '$username'";
 
       $result = runSQL($sql);
 
-      if (empty($result)) {
-        $false = json_encode(false);
-        return $false;
-      } else {
-        $true = json_encode(true);
-        return $true;
+      if($result['password']==$password && $result['username']=="$username"){
+        return true;
+      }else{
+        return false;
       }
     }
 
     function getAllUsers(){
-      $sql = "SELECT * FROM
-        users";
+      $sql = "SELECT * FROM users";
 
-      $users = runsql($sql);
-
-      $usertable = "<table>";
-
-      while($row = $users->fetch_assoc()){
-        $username = $row['username'];
-        $usertable .= "<tr>
-                        <td>$username</td>
-                      </tr>";
+      $arrHeadings = array("id","username");
+      $result = runSQL($sql);
+      echo '<pre>'.print_r($result,true).'</pre>';
+      echo "<table class='table table-striped'>";
+      echo "<thead>";
+      foreach($arrHeadings as $heading){
+        echo "<th>$heading</th>";
       }
+       echo"</thead>";
 
-      $usertable .= "</table>";
-      $usertable .= "<form method='post'>
-                      <button class='btn btn-primary' type='submit'  name='action' value='add'>New User</button>
-                    </form>";
-
-      echo $usertable;
+      foreach($result as $res){
+        echo "<tr>";
+        foreach($arrHeadings as $heading){
+          echo "<td>".$res[$heading]."</td>";
+        }
+        echo "</tr>";
+      }
     }
 
     function Add($userdata) {
