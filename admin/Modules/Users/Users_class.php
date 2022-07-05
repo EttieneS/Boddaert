@@ -12,14 +12,28 @@
 
       //for
 
-      $tablearray = runSQL(Sql);
+      $tablearray = runSQL($sql);
       print_r($tablearray);
 
       $restrictedarray = ['password'];
 
       $table = "<form method='post'>";
 
-      // while ($row = $result->fetch_assoc()) {
+      $usercolumns = $tablearray->fetch_assoc();
+      echo "<pre>" . print_r($usercolumns) ."</pre>";
+      while ($row = $tablearray->fetch_assoc()){
+        //print_r($row);
+        //echo $row['Field'] ."</br";
+        foreach($row as $value){
+          echo $row['Field'] . "</br>";
+        }
+      }
+
+        // if (!(in_array($heading, $restrictedarray))){
+        //   $table .= "<div>
+        //               <label name='$'"
+        // }
+
       //             <div>
       //               <label>User Name</label>
       //               <input id='username' name='username' type='text' />
@@ -56,37 +70,34 @@
       $sql = "SELECT * FROM users";
 
       $arrHeadings = array("id","username");
+      $restrictedarray = ["password"];
+
       $result = runSQL($sql);
 
       echo '<pre>'.print_r($result,true).'</pre>';
-      echo "<table class='table table-striped'>";
-      echo "<thead>";
+      $table = "<table class='table table-striped'>
+                  <thead>";
       foreach($arrHeadings as $heading){
-        echo "<th>$heading</th>";
+        if (!(in_array($heading, $restrictedarray))){
+            $table .= "<th>$heading</th>";
+        }
       }
-       echo"</thead>";
+      $table .= "</thead>";
 
-       while ($row = $result->fetch_assoc()){
-         echo "<tr>";
-           foreach($arrHeadings as $heading){
-             // if($value[$heading] != ""){
-               // echo "<td>".$res[$heading]."</td>";
-               echo "<td>". $row[$heading] ."</td>";
-             // }
-         }
-         echo "</tr>";
-       }
-      // foreach($result){
-      //   echo "<tr>";
-      //   //echo "<td>" .$res . "</td>";
-      //   foreach($arrHeadings as $heading){
-      //     //if($value[$heading] != ""){
-      //       // echo "<td>".$res[$heading]."</td>";
-      //       echo "<td>". $res[$heading] ."</td>";
-      //     }
-      //   // }
-      //   echo "</tr>";
-      // }
+      while ($row = $result->fetch_assoc()){
+        $table .= "<tr>";
+        foreach($arrHeadings as $heading){
+          if (!(in_array($heading, $restrictedarray))){
+              $table .= "<td>". $row[$heading] ."</td>";
+          }
+        }
+        $table .= "</tr>";
+      }
+
+      $table .= "<form method='post'>
+                  <button class='btn btn-primary' name='action' value='addusertable' type='submit'>Add User</button>
+                </form>";
+      echo $table;
     }
 
     function Add($userdata) {
