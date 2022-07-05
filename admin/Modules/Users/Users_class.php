@@ -32,7 +32,7 @@
                     <form method='post'>
                       <table>";
 
-      $usercolumns = $tablearray->fetch_assoc();
+      $columns = $tablearray->fetch_assoc();
 
       $formfields = array();
       foreach($tablearray as $value){
