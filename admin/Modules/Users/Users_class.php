@@ -1,5 +1,5 @@
 <?php
-  require_once("../../../../config.php");
+  require_once("../../../config.php");
 
   class User {
     var $username="";
@@ -8,20 +8,33 @@
     function __construct() {}
 
     function createAddUserTable() {
-      $table = "<form method='post'>
-                  <div>
-                    <label>User Name</label>
-                    <input id='username' name='username' type='text' />
-                  </div>
-                  <div>
-                    <label>Password</label>
-                    <input id='password' name='password' type='text' />
-                  </div>
-                  <div>
-                    <button type='submit' value='' class='btn btn-primary'>Save User</button>
-                  </div>
-                </form>";
-      echo $table;
+      $sql = "SHOW COLUMNS FROM users";
+
+      //for
+
+      $tablearray = runSQL(Sql);
+      print_r($tablearray);
+
+      $restrictedarray = ['password'];
+
+      $table = "<form method='post'>";
+
+      // while ($row = $result->fetch_assoc()) {
+      //             <div>
+      //               <label>User Name</label>
+      //               <input id='username' name='username' type='text' />
+      //             </div>
+      //             <div>
+      //               <label>Password</label>
+      //               <input id='password' name='password' type='text' />
+      //             </div>
+      //             <div>
+      //               <button type='submit' value='' class='btn btn-primary'>Save User</button>
+      //             </div>
+      //           </form>";
+      //
+      //            typ = sub value= sub name=action  value = addUser
+      // echo $table;
     }
 
     function Validate($username,$password){
@@ -31,7 +44,8 @@
 
       $result = runSQL($sql);
 
-      if($result['password']==$password && $result['username']=="$username"){
+      $userdata = $result->fetch_assoc();
+      if($userdata['password']==$password && $userdata['username']=="$username"){
         return true;
       }else{
         return false;
