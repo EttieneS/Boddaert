@@ -13,6 +13,12 @@
     //           <a href='../Horses/add-horse.php'>Add </a>
     //         </div>";
     // }
+    echo "<div>
+              <a href='../Users/index.php'>View Users</a>
+              <a href='add-user.php'>Add user</a>
+              <a href='../Horses/index.php'>View Horses</a>
+              <a href='../Horses/add-horse.php'>Add </a>
+            </div>";
     echo
      "</div>
   </nav>

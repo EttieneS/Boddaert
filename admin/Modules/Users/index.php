@@ -28,7 +28,7 @@
       echo $table;
     }
   } else {
-      $table = $user->getAllUsers();
+      $table = $user->GetAllUsers();
       echo $table;
   }
 ?>

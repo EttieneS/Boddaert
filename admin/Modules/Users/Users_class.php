@@ -24,6 +24,7 @@
                     WHERE id = '$id'";
 
         $user = runSQL($getUser);
+        $userdata = $user->fetch_assoc();
       }
 
       $table = "<div class='row'>
@@ -32,16 +33,14 @@
                     <form method='post'>
                       <table>";
 
-      $columns = $tablearray->fetch_assoc();
-
       $formfields = array();
-      foreach($tablearray as $value){
+      foreach($columns as $value){
         array_push($formfields, $value['Field']);
       }
 
-      foreach($formfields as $names){
-        if (!(in_array($names, $restrictedarray))){
-          $label = $names;
+      foreach($formfields as $attribute){
+        if (!(in_array($attribute, $restrictedarray))){
+          $label = $attribute;
           if ($label == "username"){
             $label = "User Name";
           }
@@ -50,10 +49,10 @@
           }
 
           $table .= "<tr>
-                      <td><label id='$names' name='$names'>$label</label></td>
-                      <td><input id='$names' name='$names'";
-                      if (isset($userdata)) {
-                          $table .= "value='" . $attribute[$headings['Field']];
+                      <td><label id='$attribute' name='$attribute'>$label</label></td>
+                      <td><input id='$attribute' name='$attribute'";
+                      if (isset($userdata)) {                          
+                          $table .= "value='" . $userdata[$attribute];
                       }
           $table .= "'></td>
                      </tr>";
