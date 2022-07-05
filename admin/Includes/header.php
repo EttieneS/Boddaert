@@ -16,9 +16,9 @@
     echo
      "</div>
   </nav>
-  <link rel='stylesheet' src='./Libraries/bootstrap/css/bootstrap.css'>
-  <script href='./Libraries/jquery.js'></script>
-  <script href='./Libraries/popper.js'></script>
-  <script href='./Libraries/bootstrap/js/bootstrap.bundle.js'></script>
-  <script href='./Libraries/datatables/datatables.min.js'></script>";
-?>
+  <link rel='stylesheet' href='../../Libraries/bootstrap/css/bootstrap.css'>
+  <link rel='stylesheet' href='../../Libraries/DataTables/datatables.css'>
+  <script href='../Libraries/jquery.js'></script>
+  <script href='../Libraries/popper.js'></script>
+  <script href='../Libraries/Bootstrap/js/bootstrap.bundle.js'></script>
+  <script href='../Libraries/Datatables/datatables.min.js'></script>";

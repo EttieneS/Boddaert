@@ -5,11 +5,18 @@
     $user = new User();
     $res = $user->Validate($_POST['username'],$_POST['password']);
 
+    //echo "<pre>" . print_r($res) . "</pre>";
+
     if($res){
-      echo "true";
-    }else{
-      //echo "false";
-      echo "<pre>print_r($res)</pre>";
+      // echo "<pre>" . print_r($res) . "</pre>";
+       return "true";
+
+
+      //return json_encode("true");
+    } else {
+      return "false";
+      //echo "<pre>" . print_r($res) . "</pre>";
+      //return json_encode("false");
     }
   }
 ?>

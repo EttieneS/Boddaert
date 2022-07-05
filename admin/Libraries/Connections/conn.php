@@ -40,4 +40,17 @@
     $conn->close();
     return $result;
   }
+
+  function getDBColumns($sql){
+    $conn = new mysqli(getHost(), "root", getPass(), getDB());
+
+    if ($conn->connect_errno) {
+      echo "Failed to connect to MySQL: " . $conn->connect_error;
+      exit();
+    }
+
+    $result = $conn->query($sql);
+
+    return $result;
+  }
 ?>

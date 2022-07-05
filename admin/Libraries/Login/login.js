@@ -3,7 +3,7 @@ function Login(){
   var password = document.getElementById('password').value;
 
   $.ajax({
-    url: "../Boddaert/admin/Modules/Users/Ajax/getUsersAjax.php",
+    url: "../boddaert/admin/Modules/Users/Ajax/getUsersAjax.php",
     method: 'post',
     data: {
       action:'login',
@@ -11,11 +11,11 @@ function Login(){
       password:password
     },
     success: function(response) {
-      if (response != "true") {
-        alert(response);
-        alert("Invalid username or password");
-      } else {
+      if (response == "true") {
+        alert("location.href");
         window.location.href = "./admin/Modules/Users/index.php";
+      } else {
+        alert("Invalid username or password");
       }
     }
   });
