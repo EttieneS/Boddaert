@@ -116,19 +116,17 @@ error_reporting(E_ALL);
                           </form>
                         </td>
                         <td>
-                          <form>
-                            <button class='btn btn-primary' onclick='SelectHorse()'>Select</button>
-                          </form>
+                          <input type='checkbox' name='selected[]' value='" . $id . "'>Select
                         </td>
                       </tr>";
       }
 
-      $table .= "   <form method='post'>
-                        <button class='btn btn-primary' name='action' value='addtable' type='submit'>Add Horse</button>
+      $table .= "     <form method='post'>
+                          <button class='btn btn-primary' name='action' value='addtable' type='submit'>Add Horse</button>
                         <input type='hidden' name='db' id='db' value='horses'>
                       </form>
-                    </form>
                   </table>
+                  <button class='btn btn-primary' name='action' value='selecthorses' type='submit'>Select Horses</button>
                 </form>";
       echo $table;
     }
@@ -190,6 +188,16 @@ error_reporting(E_ALL);
       }
 
       echo $table;
+    }
+
+    function AddSelection(){
+      $checked = $_POST['selected'];
+      $list = implode(',', $checked)
+
+      $sql = "INSERT INTO SELECTION
+              (userid, selection)
+              VALUES
+              '$userid', '$list';
     }
   }
 ?>

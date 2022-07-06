@@ -8,8 +8,12 @@
   $horse = new Horse();
 
   if (isset($_POST['action'])){
-    if ($_POST['action'] == 'selection'){
+    if ($_POST['action'] == 'selecthorses'){
+      $checked = $_POST['selected'];
+      $list = implode(',', $checked);
+      print_r($list);
 
+      $result = $horse->AddSelection($list);
     }
     if ($_POST['action'] == 'addtable'){
       $table = $horse->CreateAddEditTable($_POST['db']);
