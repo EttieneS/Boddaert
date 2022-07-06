@@ -1,6 +1,7 @@
 <?php
-  require_once("../config.php");
-
+  require_once("../../../config.php");
+  echo "<script href='../../Horses/horse.js'></script>";
+  
   class Horse {
     var $name="";
     var $number="";
@@ -60,23 +61,33 @@
       echo $result;
     }
 
-    function GetAllUsers(){
-      $getcolumnheadings = "SELECT COLUMNS FROM
+    function GetAllHorses(){
+      $getcolumnheadings = "SHOW COLUMNS FROM
                               horses";
+      $columns = runSQL($getcolumnheadings);
+      $columnheadings = $columns->fetch_assoc();
 
-      $columnHeadings = getDBColumns($getcolumnheadings);
-      $restrictedarray = ["password"];
+      $formfields = array();
+      foreach($columns as $value){
+        array_push($formfields, $value['Field']);
+      }
+
+      echo "<pre>" . print_r($columns) . "</pre>";
+
+      $restrictedarray = ["id"];
 
       $sql = "SELECT * FROM horses";
 
       $result = runSQL($sql);
+
       $table = "<form method='post'>
                   <table class='table table-striped'>
                     <tr>
                       <thead>";
-      foreach($columnheadings as $heading){
-        if (!(in_array($heading, $restrictedarray))){
-            $table .= "<th>$heading</th>";
+      foreach($columns as $attribute){
+        // $table .= "<th>" . $attribute['Field'] . "</th>";
+        if (!(in_array($attribute['Field'], $restrictedarray))){
+            $table .= "<th>" . $attribute['Field'] . "</th>";
         }
       }
       $table .= " <th>Actions</th>
@@ -85,20 +96,24 @@
 
       while ($row = $result->fetch_assoc()){
         $table .= "<tr>";
-        foreach($arrHeadings as $heading){
-          if ($heading == 'id'){
-            $id = $row[$heading];
+        foreach($columns as $heading){
+          if ($heading['Field'] == 'id'){
+            $id = $row[$heading['Field']];
           }
-          if (!(in_array($heading, $restrictedarray))){
-              $table .= "<td>". $row[$heading] ."</td>";
+
+          if (!(in_array($heading['Field'], $restrictedarray))){
+              $table .= "<td>". $row[$heading['Field']] ."</td>";
           }
         }
         $table .= "     <td>
-                          <form>
+                          <form method='post'>
                             <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
                             <input type='hidden' value='$id' id='id' name='id'>
                             <input type='hidden' name='db' id='db' value='users'>
                           </form>
+                        </td>
+                        <td>
+                          <button class='btn btn-primary' onclick='SelectHorse()'>Select</button>
                         </td>
                       </tr>";
       }

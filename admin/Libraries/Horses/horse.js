@@ -17,3 +17,7 @@ function Add(){
     }
   });
 }
+
+function SelectHorse() {
+  alert("selected");
+}
