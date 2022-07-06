@@ -1,16 +1,20 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
   require_once("../../../config.php");
   echo "<script href='../../Horses/horse.js'></script>";
-  
+
   class Horse {
     var $name="";
     var $number="";
 
     function __construct() {}
 
-    function Add($horse) {
-      $name = $horse[0]['value'];
-
+    function Add() {
+      $name = $_POST['name'];
+      echo "<pre>" . $_POST . '</pre>';
       $sql = "INSERT INTO
         horses
         (name)
@@ -21,7 +25,7 @@
       echo $result;
     }
 
-    function ViewAll(){
+    function ViewAll() {
       $sql = "SELECT * FROM
         horses";
 
@@ -35,18 +39,20 @@
       return $rows;
     }
 
-    function Update($userdata) {
-      $userid = $userdata[0]['value'];
-      $username = $userdata[1]['value'];
+    function Update() {
+      $id = $_POST['id'];
+      $name = $_POST['name'];
+      $number = $_POST['number'];
 
-      $sql = "UPDATE users SET
-        username = '$username'
+      $sql = "UPDATE horses SET
+        name = '$name',
+        number = '$number'
         WHERE
-        id = '$userid'";
+        id = '$id'";
 
       $result = runSQL($sql);
 
-      echo $result;
+      header('Location: index.php');
     }
 
     function Delete($userdata) {
@@ -61,7 +67,7 @@
       echo $result;
     }
 
-    function GetAllHorses(){
+    function GetAllHorses() {
       $getcolumnheadings = "SHOW COLUMNS FROM
                               horses";
       $columns = runSQL($getcolumnheadings);
@@ -71,8 +77,6 @@
       foreach($columns as $value){
         array_push($formfields, $value['Field']);
       }
-
-      echo "<pre>" . print_r($columns) . "</pre>";
 
       $restrictedarray = ["id"];
 
@@ -85,7 +89,6 @@
                     <tr>
                       <thead>";
       foreach($columns as $attribute){
-        // $table .= "<th>" . $attribute['Field'] . "</th>";
         if (!(in_array($attribute['Field'], $restrictedarray))){
             $table .= "<th>" . $attribute['Field'] . "</th>";
         }
@@ -107,23 +110,85 @@
         }
         $table .= "     <td>
                           <form method='post'>
-                            <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
+                            <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
                             <input type='hidden' value='$id' id='id' name='id'>
-                            <input type='hidden' name='db' id='db' value='users'>
+                            <input type='hidden' name='db' id='db' value='horses'>
                           </form>
                         </td>
                         <td>
-                          <button class='btn btn-primary' onclick='SelectHorse()'>Select</button>
+                          <form>
+                            <button class='btn btn-primary' onclick='SelectHorse()'>Select</button>
+                          </form>
                         </td>
                       </tr>";
       }
 
-      $table .= "</table>
-                </form>
-                <form method='post'>
-                  <button class='btn btn-primary' name='action' value='addusertable' type='submit'>Add User</button>
-                  <input type='hidden' name='db' id='db' value='users'>
+      $table .= "   <form method='post'>
+                        <button class='btn btn-primary' name='action' value='addtable' type='submit'>Add Horse</button>
+                        <input type='hidden' name='db' id='db' value='horses'>
+                      </form>
+                    </form>
+                  </table>
                 </form>";
+      echo $table;
+    }
+
+    function createAddEditTable($db, $id=''){
+      echo "<h3>Create Add/Edit Table</h3>";
+      $restrictedarray = array("id");//[""];
+      $showcolumns = "SHOW COLUMNS FROM $db";
+
+      $columns = getDBColumns($showcolumns);
+      $id = null;
+      if(isset($_POST['id'])){
+        $id = $_POST['id'];
+        $sql = "SELECT * FROM
+                  horses
+                WHERE
+                  id = '$id'";
+        echo $sql;
+        $horsedata = runSQL($sql);
+
+        $horsearray = $horsedata->fetch_assoc();
+      }
+
+      $table = "<form method='post'>";
+
+      foreach($columns as $heading) {
+        $attribute = $heading['Field'];
+        $label = $heading['Field'];
+
+        if ($attribute == "name"){
+          $label = "Horse Name";
+        }
+
+        if(!(in_array($heading['Field'], $restrictedarray))){
+
+
+          $table .= "<div class='form-group'>
+                      <label>" . $label . "</label></br>
+                      <input id='" . $heading['Field'] . "' name='" . $heading['Field'] . "'";
+                        if (isset($horsedata)){
+                          $table .= "value='" . $horsearray[$attribute] . "'";
+                        }
+          $table .= "</div>";
+        }
+      }
+      $table .= "<input  type='hidden' id='" . $id . "' name='id' value='". $id  ."'>";
+
+
+      if (isset($horsedata)){
+        $table .= "
+                   </br>
+                   <button type='submit' class='btn btn-primary' name='action' value='update'>Update Horse</button>
+                  </form>";
+      } else {
+        $table .= "
+                   </br>
+                   <button type='submit' class='btn btn-primary' name='action' value='add'>Add Horse</button>
+                  </form>";
+      }
+
       echo $table;
     }
   }

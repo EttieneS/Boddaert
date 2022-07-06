@@ -12,6 +12,8 @@
       echo $table;
     }
   } else {
+      echo "<h3>horses index.php</h3>";
+      
       $table = $user->getAllUsers();
       echo $table;
   }
