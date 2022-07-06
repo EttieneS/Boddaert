@@ -1,8 +1,14 @@
 <?php
   require_once("../../../config.php");
-  require_once("Users_class.php");
+  require_once("Selections_class.php");
+  include("../../Includes/header.php");
 
   echo "<pre>". print_r($_POST) ."</pre>";
 
-  echo "<h3>Index Selection</h3>";
+  $selections= new Selections();
+
+  //if (!(isset($_POST['action'])){
+    $table = $selections->ViewAllTable();
+    echo $table;
+  //}
 ?>

@@ -13,8 +13,14 @@
     }
   } else {
       echo "<h3>horses index.php</h3>";
-      
+
       $table = $user->getAllUsers();
-      echo $table;
+
+      $table = "<div class='row'>
+                  <div class='col'></div>
+                  <div class='col justify-content-center'>
+                    <form method='post'>
+                      <table>";
+
   }
 ?>
