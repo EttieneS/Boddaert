@@ -20,7 +20,7 @@
   }
 
   function runSQL($sql){
-    $conn = new mysqli(getHost(), "root", getPass(), getDB());
+    $conn = new mysqli(getHost(), getDBUser(), getPass(), getDB());
 
     if ($conn->connect_errno) {
       echo "Failed to connect to MySQL: " . $conn->connect_error;
@@ -42,7 +42,7 @@
   }
 
   function getDBColumns($sql){
-    $conn = new mysqli(getHost(), "root", getPass(), getDB());
+    $conn = new mysqli(getHost(), getDBUser(), getPass(), getDB());
 
     if ($conn->connect_errno) {
       echo "Failed to connect to MySQL: " . $conn->connect_error;

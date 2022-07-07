@@ -9,7 +9,7 @@
 
     function ViewAllTable() {
       $sql = "SELECT * FROM selections";
-      $restrictedarray = array();
+      $restrictedarray = array("id");
 
       $selections = runSQL($sql);
 
@@ -25,9 +25,9 @@
                   <table class='table table-striped'>
                     <tr>
                       <thead>";
-      foreach($columns as $heading){
-        if (!(in_array($heading, $restrictedarray))){
-            $table .= "<th>" . $heading['Field'] . "</th>";
+      foreach($formfields as $attribute){
+        if (!(in_array($attribute, $restrictedarray))){
+            $table .= TH($attribute);
         }
       }
       $table .= " <th>Actions</th>
@@ -39,22 +39,15 @@
         $id = '';
 
         foreach($columns as $heading){
-          if ($heading == 'id'){
-            $id = $row[$heading];
+          if ($heading['Field'] == 'id'){
+            $id = $row[$heading['Field']];
           }
-          if (!(in_array($heading, $restrictedarray))){
-              $table .= "<td>". $row[$heading] ."</td>";
+          if (!(in_array($heading['Field'], $restrictedarray))){
+              $table .= "<td>". $row[$heading['Field']] ."</td>";
           }
         }
         $table .= "   <td>
-                        <form>
-                          <button class='btn btn-primary' type='submit' name='action' value='view'>Details</button>
-                          <input type='hidden' value='$id' id='id' name='id'>
-                          <input type='hidden' name='db' id='db' value='users'>
-                        </form>
-                      </td>
-                      <td>
-                        <button id='modal' name='modal' onclick='modal()'>Modal</button>
+                        <button type='button' class='btn btn-primary' id='modal' name='modal' onclick='Modal()'>Modal</button>
                       </td>
                     </tr>";
       }

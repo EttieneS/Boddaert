@@ -51,7 +51,7 @@
           $table .= "<tr>
                       <td><label id='$attribute' name='$attribute'>$label</label></td>
                       <td><input id='$attribute' name='$attribute'";
-                      if (isset($userdata)) {                          
+                      if (isset($userdata)) {
                           $table .= "value='" . $userdata[$attribute];
                       }
           $table .= "'></td>
@@ -92,7 +92,7 @@
       $sql = "SELECT * FROM users";
 
       $arrHeadings = array("id","username");
-      $restrictedarray = ["password"];
+      $restrictedarray = ["id", "password"];
 
       $result = runSQL($sql);
 
@@ -101,13 +101,13 @@
                     <tr>
                       <thead>";
       foreach($arrHeadings as $heading){
-        if (!(in_array($heading, $restrictedarray))){
-            $table .= "<th>$heading</th>";
+        if (!(in_array($heading, $restrictedarray))){                        
+            $table .= TH($heading);
         }
       }
-      $table .= " <th>Actions</th>
-                 </thead>
-                </tr>";
+      $table .= TH("Actions") .
+                 " </thead>
+                 </tr>";
 
       while ($row = $result->fetch_assoc()){
         $table .= "<tr>";
@@ -116,17 +116,17 @@
             $id = $row[$heading];
           }
           if (!(in_array($heading, $restrictedarray))){
-              $table .= "<td>". $row[$heading] ."</td>";
+              $table .= TD($row[$heading]);//"<td>". $row[$heading] . "</td>"; //TD($row[$heading]);
           }
         }
-        $table .= "     <td>
-                          <form>
-                            <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
-                            <input type='hidden' value='$id' id='id' name='id'>
-                            <input type='hidden' name='db' id='db' value='users'>
-                          </form>
-                        </td>
-                      </tr>";
+        $table .= " <td>
+                      <form>
+                        <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
+                        <input type='hidden' value='$id' id='id' name='id'>
+                        <input type='hidden' name='db' id='db' value='users'>
+                      </form>
+                    </td>
+                  </tr>";
       }
 
       $table .= "</table>

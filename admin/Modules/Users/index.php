@@ -1,8 +1,8 @@
 <?php
-  require_once("../../../config.php");
+  //require_once("../../../config.php");
   require_once("Users_class.php");
-
-  echo "<pre>". print_r($_POST) ."</pre>";
+  require_once("../../Includes/header.php");
+  require_once("../../Libraries/Elements/Elements.php");
 
   $user = new User();
 
@@ -12,15 +12,18 @@
       echo $table;
     }
   } else {
-      echo "<h3>horses index.php</h3>";
+      $table = "<div class='container'>
+                  <div class='row'> "
+                    . DivCol() .
+                    "<div class='col justify-content-center'>";
 
-      $table = $user->getAllUsers();
-
-      $table = "<div class='row'>
-                  <div class='col'></div>
-                  <div class='col justify-content-center'>
-                    <form method='post'>
-                      <table>";
-
+      $allusers = $user->getAllUsers();
+      $allusers .= "     </div>"
+                         . DivCol() .
+                      "</div>
+                    </body>
+                  </html>";
+      $table .= $allusers;
+      echo $table;
   }
 ?>

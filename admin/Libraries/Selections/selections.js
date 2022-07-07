@@ -1,3 +1,11 @@
+$(document).ready( function() {
+  $('#exampleModal').hide();
+});
+
 function Modal() {
-  alert("modal");
+  $('#exampleModal').modal('show');
+}
+
+function closeModal() {
+  $('#exampleModal').modal('hide');
 }
