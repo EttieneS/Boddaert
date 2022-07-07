@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
   require_once("../../../config.php");
   echo "<script href='../../Horses/horse.js'></script>";
+  require("../Selections/Selections_class.php");
 
   class Horse {
     var $name="";
@@ -191,13 +192,19 @@ error_reporting(E_ALL);
     }
 
     function AddSelection(){
-      $checked = $_POST['selected'];
-      $list = implode(',', $checked)
+      $userid = 1; //Session variable
 
-      $sql = "INSERT INTO SELECTION
-              (userid, selection)
-              VALUES
-              '$userid', '$list';
+      $checked = $_POST['selected'];
+      $selections = implode(',', $checked);
+
+      $sql = "INSERT INTO
+        selections
+        (userid, selection)
+        VALUES
+        ('$userid', '$selections')";
+
+      $result = runSQL($sql);
+      echo $result;
     }
   }
 ?>

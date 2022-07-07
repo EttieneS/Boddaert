@@ -3,7 +3,7 @@
 
   class Selections {
     var $userid = "";
-    var $selection = array();
+    var $selections = array();
 
     function __construct() {}
 
@@ -15,7 +15,6 @@
 
       $showcolumns = "SHOW COLUMNS FROM selections";
       $columns = getDBColumns($showcolumns);
-      print_r($columns);
 
       $formfields = array();
       foreach($columns as $value){
@@ -37,6 +36,8 @@
 
         while ($row = $selections->fetch_assoc()){
         $table .= "<tr>";
+        $id = '';
+
         foreach($columns as $heading){
           if ($heading == 'id'){
             $id = $row[$heading];
@@ -51,6 +52,9 @@
                           <input type='hidden' value='$id' id='id' name='id'>
                           <input type='hidden' name='db' id='db' value='users'>
                         </form>
+                      </td>
+                      <td>
+                        <button id='modal' name='modal' onclick='modal()'>Modal</button>
                       </td>
                     </tr>";
       }
