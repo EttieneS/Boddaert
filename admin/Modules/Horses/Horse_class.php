@@ -1,11 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
   require_once("../../../config.php");
   echo "<script href='../../Horses/horse.js'></script>";
   require("../Selections/Selections_class.php");
+  require_once("../../Libraries/Elements/Elements.php");
 
   class Horse {
     var $name="";
@@ -69,66 +66,85 @@ error_reporting(E_ALL);
     }
 
     function GetAllHorses() {
-      $getcolumnheadings = "SHOW COLUMNS FROM
-                              horses";
-      $columns = runSQL($getcolumnheadings);
-      $columnheadings = $columns->fetch_assoc();
+      // $getcolumnheadings = "SHOW COLUMNS FROM
+      //                         horses";
+      // $columns = runSQL($getcolumnheadings);
+      // $columnheadings = $columns->fetch_assoc();
+      //
+      // $formfields = array();
+      // foreach($columns as $value){
+      //   array_push($formfields, $value['Field']);
+      // }
+      //
+      // $restrictedarray = ["id"];
+      //
+      // $sql = "SELECT * FROM horses";
+      //
+      // $result = runSQL($sql);
+      //
+      // $table = "<form method='post'>
+      //             <table class='table table-striped'>
+      //               <tr>
+      //                 <thead>";
+      // foreach($columns as $attribute){
+      //   if (!(in_array($attribute['Field'], $restrictedarray))){
+      //       $table .= "<th>" . $attribute['Field'] . "</th>";
+      //   }
+      // }
+      // $table .= " <th>Actions</th>
+      //            </thead>
+      //           </tr>";
+      //
+      // while ($row = $result->fetch_assoc()){
+      //   $table .= "<tr>";
+      //   foreach($columns as $heading){
+      //     if ($heading['Field'] == 'id'){
+      //       $id = $row[$heading['Field']];
+      //     }
+      //
+      //     if (!(in_array($heading['Field'], $restrictedarray))){
+      //         $table .= "<td>". $row[$heading['Field']] ."</td>";
+      //     }
+      //   }
+      //   $table .= "     <td>
+      //                     <form method='post'>
+      //                       <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
+      //                       <input type='hidden' value='$id' id='id' name='id'>
+      //                       <input type='hidden' name='db' id='db' value='horses'>
+      //                     </form>
+      //                   </td>
+      //                   <td>
+      //                     <input type='checkbox' name='selected[]' value='" . $id . "'>Select
+      //                   </td>
+      //                 </tr>";
+      // }
+      //
+      // $table .= "     <form method='post'>
+      //                     <button class='btn btn-primary' name='action' value='addtable' type='submit'>Add Horse</button>
+      //                   <input type='hidden' name='db' id='db' value='horses'>
+      //                 </form>
+      //             </table>
+      //             <button class='btn btn-primary' name='action' value='selecthorses' type='submit'>Select Horses</button>
+      //           </form>";
+      $id = '';
+      $tablename = "horses";
+      $restrictedarray = array("id");
 
-      $formfields = array();
-      foreach($columns as $value){
-        array_push($formfields, $value['Field']);
-      }
+      $button1 = array();
+      $button1->type = "button";
+      $button1->text = "Edit";
 
-      $restrictedarray = ["id"];
-
-      $sql = "SELECT * FROM horses";
-
-      $result = runSQL($sql);
-
-      $table = "<form method='post'>
-                  <table class='table table-striped'>
-                    <tr>
-                      <thead>";
-      foreach($columns as $attribute){
-        if (!(in_array($attribute['Field'], $restrictedarray))){
-            $table .= "<th>" . $attribute['Field'] . "</th>";
-        }
-      }
-      $table .= " <th>Actions</th>
-                 </thead>
-                </tr>";
-
-      while ($row = $result->fetch_assoc()){
-        $table .= "<tr>";
-        foreach($columns as $heading){
-          if ($heading['Field'] == 'id'){
-            $id = $row[$heading['Field']];
-          }
-
-          if (!(in_array($heading['Field'], $restrictedarray))){
-              $table .= "<td>". $row[$heading['Field']] ."</td>";
-          }
-        }
-        $table .= "     <td>
-                          <form method='post'>
-                            <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
-                            <input type='hidden' value='$id' id='id' name='id'>
-                            <input type='hidden' name='db' id='db' value='horses'>
-                          </form>
-                        </td>
-                        <td>
-                          <input type='checkbox' name='selected[]' value='" . $id . "'>Select
-                        </td>
-                      </tr>";
-      }
-
-      $table .= "     <form method='post'>
-                          <button class='btn btn-primary' name='action' value='addtable' type='submit'>Add Horse</button>
-                        <input type='hidden' name='db' id='db' value='horses'>
-                      </form>
-                  </table>
-                  <button class='btn btn-primary' name='action' value='selecthorses' type='submit'>Select Horses</button>
-                </form>";
+      $button2 = array();
+      $button2->type = "select";
+      $button->text = "Select";
+      $buttons = array("edit", "select");
+      // $buttons = array("<form method='post'>
+      //                       <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
+      //                       <input type='hidden' value='$id' id='id' name='id'>
+      //                       <input type='hidden' name='db' id='db' value='horses'>
+      //                     </form>",
+      //                     "<input type='checkbox' name='selected[]' value='" . $id . "'>Select");
+      $table = Table($tablename, $restrictedarray, $buttons);
       echo $table;
     }
 
