@@ -2,6 +2,12 @@
   require_once("../../../config.php");
 
   function Label($text){
+    $text = ucfirst($text);
+
+    if($text == "Username"){
+      $text = "User Name";
+    }
+
     return "<label>" . $text . "</label>";
   }
 
@@ -21,6 +27,10 @@
     return "<div class='col'></div>";
   }
 
+  function FunctionButton($functionname, $id, $text){
+    return "<button type='button' class='btn btn-primary' id='" . $functionname  ."' name='". $functionname ."' onclick='" . $functionname . "(" . $id .")" ."'>" . $text . "</button>";
+  }
+
   function EditFormButton($id, $tablename) {
     return "<form method='post'>
       <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
@@ -29,15 +39,22 @@
     </form>";
   }
 
-  function SelectFormInput($id, $text){
-    return "<input type='checkbox' name='selected[]' value='" . $id . "'>" . $text ;
+  function SelectFormInput($id, $text, $arrayname){
+    return "<input type='checkbox' name='". $arrayname . "[]' value='" . $id . "'>" . $text ;
+  }
+
+  function Input($name, $type){
+    return "<input id='$name' name='$name' type='$type'>";
+  };
+
+  function Input($name, $type, $value) {
+    return "<input id='$name' name='$name' type='$type' value='$value'>";
   }
 
   function Table($tablename, $restrictedarray, $buttons){
     $formfields = array();
 
-    $showcolumns = "SHOW COLUMNS FROM "  .  $tablename;
-
+    $showcolumns = "SHOW COLUMNS FROM " . $tablename;
     $columns = getDBColumns($showcolumns);
 
     foreach($columns as $value) {
@@ -75,15 +92,20 @@
       }
 
       foreach($buttons as $button){
-        $table .=  "<td>";
-        if($button == "edit"){
-          $table .= EditFormButton($row['id'], $tablename);
-        }
-        if($button == "select"){
-          $table .= SelectFormInput($row['id'], "selected");
-        }
+        foreach($button as $value){
+          $table .=  "<td>";
+          if($value['type'] == "edit"){
+            $table .= EditFormButton($id, $tablename);
+          }
+          if($value['type'] == "select"){
+            $table .= SelectFormInput($id, "selected");
+          }
+          if($value['type'] == "function") {
+            $table .= FunctionButton($value['functionname'], $id, $value['text']);
+          }
 
-        $table .= "</td>";
+          $table .= "</td>";
+        }
       }
       $table .= "</tr>";
     }
@@ -91,5 +113,46 @@
               </form>";
 
      return $table;
+  }
+
+  function CreateAddEditTable($tablename, $id='', $restrictedarray){
+    $formfields = array();
+
+    $showcolumns = "SHOW COLUMNS FROM " . $tablename;
+    $columns = getDBColumns($showcolumns);
+
+    foreach($columns as $value) {
+      array_push($formfields, $value['Field']);
+    }
+
+    if ($id != ''){
+      $sql = "SELECT * FROM " . $tablename .
+             "WHERE
+              id = " . $id;
+
+      $data = runSQL($sql);
+    }
+
+    $form = "<form method='post'>";
+    foreach($formfields as $field){
+      if(!(in_array($field, $restrictedarray))){
+        $form .= "<div class='form-group'>"
+                    . Label($field) . "</br>";
+                    if ($id != '') {
+                      $form .= Input($name, $data[$field]);
+                    } else {
+                      $form .= Input($name);
+                    }
+                    $form .= "</div>";
+      }
+    }
+    $form .= "<div class='form-group'>
+                <button type='submit' class='btn btn-primary' name='action'";
+    if ($id == ''){
+      $form .= "value='add'>Add Record";
+    } else {
+      $form .= "value='update'>Update Record";
+    }
+    $form .= "></button></div></form>";
   }
 ?>

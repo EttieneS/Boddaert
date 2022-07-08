@@ -26,6 +26,7 @@
 
               $sql = "SELECT * FROM selections WHERE id = $id";
               $selectiondata = runSQL($sql);
+              print_r($selectiondata);
 
               while($data = $selectiondata->fetch_assoc()){
                 $list = explode(",", $data['selection']);
@@ -35,32 +36,33 @@
 
                 $restrictedarray = array("id");
 
-                echo "<table>
+                $table = "<table>
                         <tr>
                           <thead>";
 
                 foreach($arrheadings as $heading){
                   if(!(in_array($heading['Field'], $restrictedarray))){
-                    TH(ucfirst($heading['Field']));
+                    $table .= TH(ucfirst($heading['Field']));
                   }
                 }
-                echo "  </thead>
+                $table .= "  </thead>
                       <tr>";
 
                 foreach($list as $id){
                   $sql = "SELECT * FROM horses WHERE id = $id";
                   $horsedata = runSQL($sql);
-                  echo "<tr>";
+                  $table .= "<tr>";
                   while($columns = $horsedata->fetch_assoc()){
                       foreach($arrheadings as $heading){
                           if(!(in_array($heading['Field'], $restrictedarray))){
-                            TD($columns[$heading['Field']]);
+                            $table .= TD($columns[$heading['Field']]);
                           }
                       }
-                      echo "<tr>";
+                      $table .= "<tr>";
                   }
                 }
-                echo "</table>";
+                $table .= "</table>";
+                echo $table;
               }
             ?>
           </div>

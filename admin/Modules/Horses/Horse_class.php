@@ -130,13 +130,13 @@
       $tablename = "horses";
       $restrictedarray = array("id");
 
-      $button1 = array();
-      $button1->type = "button";
-      $button1->text = "Edit";
-
-      $button2 = array();
-      $button2->type = "select";
-      $button->text = "Select";
+      // $button1 = array();
+      // $button1->type = "button";
+      // $button1->text = "Edit";
+      //
+      // $button2 = array();
+      // $button2->type = "select";
+      // $button->text = "Select";
       $buttons = array("edit", "select");
       // $buttons = array("<form method='post'>
       //                       <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>

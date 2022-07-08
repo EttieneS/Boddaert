@@ -2,7 +2,7 @@ $(document).ready( function() {
   $('#exampleModal').hide();
 });
 
-function Modal() {
+function detailsModal() {
   $('#exampleModal').modal('show');
 }
 

@@ -8,7 +8,18 @@
 
   if (isset($_POST['action'])){
     if ($_POST['action'] == 'add'){
-      $table = $user->createAddUserTable();
+      $tablename = "users";
+      $restrictedarray = array("id");
+
+      $form = CreateAddEditTable($tablename, $id, $restrictedarray);
+      echo $table;
+    }
+    if ($_POST['action'] == 'edit'){
+      $id = $_POST['id'];
+      $tablename = "users";
+      $restrictedarray = array("id");
+
+      $form = CreateAddEditTable($tablename, $id, $restrictedarray);
       echo $table;
     }
   } else {
