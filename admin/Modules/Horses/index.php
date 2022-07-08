@@ -3,8 +3,6 @@
   require_once("Horse_class.php");
   include("../../Includes/header.php");
 
-  echo "<pre>". print_r($_POST) ."</pre>";
-
   $horse = new Horse();
 
   if (isset($_POST['action'])){
@@ -28,7 +26,7 @@
     }
 
     if ($_POST['action'] == 'add'){
-      $result = $horse->Add($_POST['db']);
+      $result = $horse->Add();
     } else if ($_POST['action'] == 'update'){
       $result = $horse->Update();
     }

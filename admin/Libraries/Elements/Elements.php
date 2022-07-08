@@ -43,12 +43,15 @@
     return "<input type='checkbox' name='". $arrayname . "[]' value='" . $id . "'>" . $text ;
   }
 
-  function Input($name, $type){
-    return "<input id='$name' name='$name' type='$type'>";
+  function Input($name, $type, $value=''){
+    return "<input id='$name' name='$name' type='$type' value='$value'>";
   };
 
-  function Input($name, $type, $value) {
-    return "<input id='$name' name='$name' type='$type' value='$value'>";
+  function DeleteFormButton($id){
+    return "<form method='post'>
+             <button id='deleteaction' name='action' value='deleterecord' type='submit' class='btn btn-primary'>Delete</button>
+             <input type='hidden' id='id' name='id' value='$id'>
+            </form>";
   }
 
   function Table($tablename, $restrictedarray, $buttons){
@@ -61,9 +64,10 @@
       array_push($formfields, $value['Field']);
     }
 
-    $table = "<table>
-                <tr>
-                  <thead>";
+    $table = "<div>
+                <table>
+                  <tr>
+                    <thead>";
     foreach($formfields as $heading){
       if(!(in_array($heading, $restrictedarray))){
         $table .= TH($heading);
@@ -90,33 +94,42 @@
           $table .= TD($row[$value]);
         }
       }
+      if(!(empty($buttons))){
+        foreach($buttons as $button){
+          foreach($button as $value){
+            $table .=  "<td>";
+            if($value['type'] == "edit"){
+              $table .= EditFormButton($id, $tablename);
+            }
+            if($value['type'] == "select"){
+              $table .= SelectFormInput($id, "Select", "selected");
+            }
+            if($value['type'] == "function") {
+              $table .= FunctionButton($value['functionname'], $id, $value['text']);
+            }
+            if($value['type'] == "delete") {
+              $table .= DeleteFormButton($id);
+            }
 
-      foreach($buttons as $button){
-        foreach($button as $value){
-          $table .=  "<td>";
-          if($value['type'] == "edit"){
-            $table .= EditFormButton($id, $tablename);
+            $table .= "</td>";
           }
-          if($value['type'] == "select"){
-            $table .= SelectFormInput($id, "selected");
-          }
-          if($value['type'] == "function") {
-            $table .= FunctionButton($value['functionname'], $id, $value['text']);
-          }
-
-          $table .= "</td>";
         }
       }
       $table .= "</tr>";
     }
     $table .= "</table>
-              </form>";
+            </form>
+            <form method='post'>
+              <button id='add' name='action' type='submit' class='btn btn-primary' value='addtable'>Add</button>
+            </form>
+          <div>";
 
      return $table;
   }
 
-  function CreateAddEditTable($tablename, $id='', $restrictedarray){
+  function CreateAddEditTable($tablename,  $restrictedarray, $id=''){
     $formfields = array();
+    $rows = array();
 
     $showcolumns = "SHOW COLUMNS FROM " . $tablename;
     $columns = getDBColumns($showcolumns);
@@ -127,10 +140,11 @@
 
     if ($id != ''){
       $sql = "SELECT * FROM " . $tablename .
-             "WHERE
+             " WHERE
               id = " . $id;
 
       $data = runSQL($sql);
+      $rows = $data->fetch_assoc();
     }
 
     $form = "<form method='post'>";
@@ -138,21 +152,25 @@
       if(!(in_array($field, $restrictedarray))){
         $form .= "<div class='form-group'>"
                     . Label($field) . "</br>";
-                    if ($id != '') {
-                      $form .= Input($name, $data[$field]);
-                    } else {
-                      $form .= Input($name);
+                    if ($id == '') {
+                      $form .= Input($field, "text");
+                    }
+                    else {
+                      $form .= Input($field, "text", $rows[$field]);
                     }
                     $form .= "</div>";
       }
     }
-    $form .= "<div class='form-group'>
-                <button type='submit' class='btn btn-primary' name='action'";
+    $form .= ";
+               <button type='submit' class='btn btn-primary' id='action' name='action'";
     if ($id == ''){
-      $form .= "value='add'>Add Record";
+      $form .= "value='addrecord'>Add Record</button>";
     } else {
-      $form .= "value='update'>Update Record";
+      $form .= "value='updaterecord'>Update Record</button>
+                <input type='hidden' id='id' name='id' value='$id'>";
     }
-    $form .= "></button></div></form>";
+    $form .= "</form></div>";
+
+    return $form;
   }
-?>
+  ?>

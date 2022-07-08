@@ -7,7 +7,7 @@
 
     function __construct() {}
 
-    function createAddEditTable($db, $id="") {
+    function createAddEditTable($tablename, $id="") {
       $db = "users";
       $showcolumns = "SHOW COLUMNS FROM $db";
 
@@ -89,58 +89,58 @@
     }
 
     function getAllUsers(){
-      $sql = "SELECT * FROM users";
-
-      $arrHeadings = array("id","username");
-      $restrictedarray = ["id", "password"];
-
-      $result = runSQL($sql);
-
-      $table = "<form method='post'>
-                  <table class='table table-striped'>
-                    <tr>
-                      <thead>";
-      foreach($arrHeadings as $heading){
-        if (!(in_array($heading, $restrictedarray))){                        
-            $table .= TH($heading);
-        }
-      }
-      $table .= TH("Actions") .
-                 " </thead>
-                 </tr>";
-
-      while ($row = $result->fetch_assoc()){
-        $table .= "<tr>";
-        foreach($arrHeadings as $heading){
-          if ($heading == 'id'){
-            $id = $row[$heading];
-          }
-          if (!(in_array($heading, $restrictedarray))){
-              $table .= TD($row[$heading]);//"<td>". $row[$heading] . "</td>"; //TD($row[$heading]);
-          }
-        }
-        $table .= " <td>
-                      <form>
-                        <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
-                        <input type='hidden' value='$id' id='id' name='id'>
-                        <input type='hidden' name='db' id='db' value='users'>
-                      </form>
-                    </td>
-                  </tr>";
-      }
-
-      $table .= "</table>
-                </form>
-                <form method='post'>
-                  <button class='btn btn-primary' name='action' value='addusertable' type='submit'>Add User</button>
-                  <input type='hidden' name='db' id='db' value='users'>
-                </form>";
+      // $sql = "SELECT * FROM users";
+      //
+      // $arrHeadings = array("id","username");
+      // $restrictedarray = ["id", "password"];
+      //
+      // $result = runSQL($sql);
+      //
+      // $table = "<form method='post'>
+      //             <table class='table table-striped'>
+      //               <tr>
+      //                 <thead>";
+      // foreach($arrHeadings as $heading){
+      //   if (!(in_array($heading, $restrictedarray))){
+      //       $table .= TH($heading);
+      //   }
+      // }
+      // $table .= TH("Actions") .
+      //            " </thead>
+      //            </tr>";
+      //
+      // while ($row = $result->fetch_assoc()){
+      //   $table .= "<tr>";
+      //   foreach($arrHeadings as $heading){
+      //     if ($heading == 'id'){
+      //       $id = $row[$heading];
+      //     }
+      //     if (!(in_array($heading, $restrictedarray))){
+      //         $table .= TD($row[$heading]);//"<td>". $row[$heading] . "</td>"; //TD($row[$heading]);
+      //     }
+      //   }
+      //   $table .= " <td>
+      //                 <form>
+      //                   <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
+      //                   <input type='hidden' value='$id' id='id' name='id'>
+      //                   <input type='hidden' name='db' id='db' value='users'>
+      //                 </form>
+      //               </td>
+      //             </tr>";
+      // }
+      //
+      // $table .= "</table>
+      //           </form>
+      //           <form method='post'>
+      //             <button class='btn btn-primary' name='action' value='add' type='submit'>Add User</button>
+      //             <input type='hidden' name='db' id='db' value='users'>
+      //           </form>";
       echo $table;
     }
 
-    function AddUser($userdata) {
-      $username = $userdata['username'];
-      $password = $userdata['password'];
+    function AddUser() {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
 
       $sql = "INSERT INTO
         users
@@ -149,7 +149,8 @@
         ('$username', '$password')";
 
       $result = runSQL($sql);
-      header('Location: index.php');
+      $_POST['action']= '';
+      echo header('Location: index.php');
     }
 
     function CreateEditTable($id) {
@@ -184,6 +185,34 @@
       // }
       // $table .= "</table>
       //            <button class='btn btn-primary' class='button' type='submit' value='update'>Save Changes</button>";
+    }
+
+    function UpdateUser($user) {
+      $id = $user['id'];
+      $username = $user['username'];
+
+      echo "<pre>" .  print_r($user) . "</pre>";
+
+      $sql = "UPDATE users SET
+        username = '$username'
+        WHERE
+        id = '$id'";
+
+      $result = runSQL($sql);
+      echo header('Location: index.php');
+    }
+
+    function DeleteUser() {
+      $id = $_POST['id'];
+
+      $sql = "DELETE FROM users
+        WHERE
+        id = '$id'";
+
+      $result = runSQL($sql);
+      echo $result;
+      $_POST = '';
+      echo header('Location: index.php');
     }
 }
 ?>

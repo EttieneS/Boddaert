@@ -130,20 +130,9 @@
       $tablename = "horses";
       $restrictedarray = array("id");
 
-      // $button1 = array();
-      // $button1->type = "button";
-      // $button1->text = "Edit";
-      //
-      // $button2 = array();
-      // $button2->type = "select";
-      // $button->text = "Select";
-      $buttons = array("edit", "select");
-      // $buttons = array("<form method='post'>
-      //                       <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
-      //                       <input type='hidden' value='$id' id='id' name='id'>
-      //                       <input type='hidden' name='db' id='db' value='horses'>
-      //                     </form>",
-      //                     "<input type='checkbox' name='selected[]' value='" . $id . "'>Select");
+      $buttons[] = array( //array('type' => 'edit'),
+                          array('type' => 'select'));
+
       $table = Table($tablename, $restrictedarray, $buttons);
       echo $table;
     }

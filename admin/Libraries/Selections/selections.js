@@ -1,5 +1,5 @@
 $(document).ready( function() {
-  $('#exampleModal').hide();
+  $('#exampleModal').modal('hide'));
 });
 
 function detailsModal() {

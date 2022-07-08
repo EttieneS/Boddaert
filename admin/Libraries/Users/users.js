@@ -45,3 +45,9 @@ function Add(){
     }
   });
 }
+
+function UpdateJS() {
+  var username = $('#username').value();
+
+  alert(username);
+}

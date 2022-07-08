@@ -1,5 +1,4 @@
 <?php
-  //require_once("../../../config.php");
   require_once("Users_class.php");
   require_once("../../Includes/header.php");
   require_once("../../Libraries/Elements/Elements.php");
@@ -11,30 +10,34 @@
       $tablename = "users";
       $restrictedarray = array("id");
 
-      $form = CreateAddEditTable($tablename, $id, $restrictedarray);
-      echo $table;
+      $form = CreateAddEditTable($tablename, $restrictedarray);
+      echo $form;
     }
-    if ($_POST['action'] == 'edit'){
+    if ($_POST['action'] == 'edittable'){
       $id = $_POST['id'];
       $tablename = "users";
       $restrictedarray = array("id");
 
-      $form = CreateAddEditTable($tablename, $id, $restrictedarray);
-      echo $table;
+      $form = CreateAddEditTable($tablename, $restrictedarray, $id);
+      echo $form;
+    }
+    if ($_POST['action'] == 'addrecord'){
+      $result = $user->AddUser();
+    }
+    if ($_POST['action'] == 'updaterecord'){
+      $result = $user->UpdateUser($_POST);
+    }
+    if ($_POST['action'] == 'deleterecord'){
+      $result = $user->DeleteUser($_POST);
     }
   } else {
-      $table = "<div class='container'>
-                  <div class='row'> "
-                    . DivCol() .
-                    "<div class='col justify-content-center'>";
+      $tablename = 'users';
+      $restrictedarray = array("id");
+      $buttons[] = array( array('type' => 'edit'),
+                          array('type' => 'delete'));
 
-      $allusers = $user->getAllUsers();
-      $allusers .= "     </div>"
-                         . DivCol() .
-                      "</div>
-                    </body>
-                  </html>";
-      $table .= $allusers;
+      $table = Table($tablename, $restrictedarray, $buttons);
+
       echo $table;
   }
 ?>

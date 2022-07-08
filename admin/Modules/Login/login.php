@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap v5.2 -->
-  <link href="admin/Libraries/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <script src="admin/Libraries/Bootstrap/js/bootstrap.bundle.min.js"></script>
+  <link href="../../Libraries/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../../Libraries/Bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- END -->
 
   <!-- jQuery v3.6 -->
-  <script src="admin/Libraries/jQuery/jQuery.js"></script>
+  <script src="../../Libraries/jQuery/jQuery.js"></script>
   <!-- END -->
 
   <!-- Custom js -->
-  <script src="admin/script/users.js"></script>
+  <script src="../../script/users.js"></script>
   <!-- END -->
 
   <title>Login</title>
