@@ -16,13 +16,13 @@
     function __construct() {}
 
     function ViewAllTable() {
-      $tablename = "selections";
-      $reservedarray = array("id");
+      // $tablename = "selections";
+      // $reservedarray = array("id");
 
-      $buttons[] = array( array('type' => 'function', 'text' => 'Details', 'functionname' => "detailsModal"));
+      // $buttons[] = array( array('type' => 'function', 'text' => 'Details', 'functionname' => "detailsModal"));
 
-      $table = Table($tablename, $reservedarray, $buttons);
-      echo $table;
+      // $table = Table($tablename, $reservedarray, $buttons);
+      // echo $table;
     }
   }
 ?>

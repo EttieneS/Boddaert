@@ -41,16 +41,26 @@
     return $result;
   }
 
-  function getDBColumns($sql){
-    $conn = new mysqli(getHost(), getDBUser(), getPass(), getDB());
+  function getDBColumns($db,$fields){
+    if($fields != ""){
+      $fields = explode(",",$fields);
 
-    if ($conn->connect_errno) {
-      echo "Failed to connect to MySQL: " . $conn->connect_error;
-      exit();
+      foreach($fields as $field){
+        $newFields[] = "'".$field."'";
+      }
+
+      $fields = implode(",",$newFields);
+      $sql = "SHOW COLUMNS FROM $db WHERE Field NOT IN ($fields)";
+    }else{
+      $sql = "SHOW COLUMNS FROM $db";
+    }
+    
+    $result = runSQL($sql);
+    $fields = array();
+    while($row = $result->fetch_assoc()){
+      $fields[] = $row;
     }
 
-    $result = $conn->query($sql);
-
-    return $result;
+    return $fields;
   }
 ?>
