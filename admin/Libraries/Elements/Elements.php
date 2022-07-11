@@ -54,11 +54,12 @@
             </form>";
   }
 
-  function createTable($sql, $tablename, $restrictedarray, $buttons){
+  function createTable($sql, $tablename, $restrictedarray, $buttons=""){
     $columns = getDBColumns($tablename, $restrictedarray);
 
     echo "<form method=post style='float:right'>
-            <input type='submit' name='addNew' id='addNew' value='Add' onclick='OpenAddEditModal()' class='btn btn-success'>
+            <input type='submit' name='addNew' id='addNew' value='Add' class='btn btn-success'>
+            <input type='hidden' name='db' id='db' value='$tablename'>
           </form>";
     echo "<table class='table table-striped'>";
     echo "<thead>";
@@ -77,7 +78,11 @@
         echo "<td>{$row[$column['Field']]}</td>";
       }
       echo "<td>";
-      getTools($tablename,$row['id']);
+      if($buttons == ""){
+        getTools($tablename,$row['id']);
+      }else{
+        //do something
+      }
       echo "</td>";
       echo "</tr>";
     }
@@ -118,8 +123,8 @@
           </div>";
   }
 
-  function CreateAddEditModal() {
-    $modal =  "<div class='modal fade' id='AddEditModal' name='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+  function CreateAddEditModal($body){
+    echo "<div class='modal fade' id='AddEditModal' name='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
       <div class='modal-dialog' role='document'>
         <div class='modal-content'>
           <div class='modal-header'>
@@ -129,7 +134,8 @@
             </button>
           </div>
           <div class='modal-body'>
-
+            <p>Add/Edit</p>
+            $body
           </div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
@@ -139,8 +145,10 @@
       </div>
     </div>";
 
+    echo "<script>
+          eval($('#AddEditModal').modal('toggle'));
+        </script>";
 
-    echo $modal;
   }
 
   function CreateAddEditTable($tablename,  $restrictedarray, $id=''){

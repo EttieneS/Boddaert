@@ -16,13 +16,23 @@
     function __construct() {}
 
     function ViewAllTable() {
-      // $tablename = "selections";
-      // $reservedarray = array("id");
+      $tablename = "selections";
+      $reservedarray = array("id");
 
-      // $buttons[] = array( array('type' => 'function', 'text' => 'Details', 'functionname' => "detailsModal"));
+      $buttons = $this->getTools($db,$id);//array( array('type' => 'function', 'text' => 'Details', 'functionname' => "detailsModal"));
 
-      // $table = Table($tablename, $reservedarray, $buttons);
-      // echo $table;
+      $table = createTable($tablename, $reservedarray, $buttons);
+      echo $table;
+    }
+
+    function getTools($db,$id){
+      echo "<form method=post style='float:right'>
+              <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
+              <input type='submit' name='remove' id='remove' value='Remove' class='btn btn-danger'>
+              <input type='submit' name='View' id='View' value='View' class='btn btn-info'>
+              <input type='hidden' name='db' id='db' value='$db'>
+              <input type='hidden' name='id' id='id' value='$id'>
+            </form>";
     }
   }
 ?>
