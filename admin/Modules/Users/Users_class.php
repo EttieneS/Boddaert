@@ -4,6 +4,7 @@
   echo "<script href='../../Horses/horse.js'></script>";
   require_once("../../Libraries/Elements/Elements.php");
 =======
+  //require_once("../../../config.php");
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
   class User {
@@ -12,6 +13,27 @@
 
     function __construct() {}
 
+    function init(){
+      $sql = "SELECT * FROM users";
+      $tablename = 'users';
+      $restrictedarray = array("id");
+      $restrictedstring = "id";
+      $buttons[] = array();
+      $db = "users";
+
+      echo createTable($sql, $tablename, $restrictedstring, $buttons);
+    }
+
+    function getTools($db,$id){
+      echo "<form method=post style='float:right'>
+              <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
+              <input type='submit' name='remove' id='remove' value='Remove' class='btn btn-danger'>
+              <input type='submit' name='View' id='View' value='View' class='btn btn-info'>
+              <input type='hidden' name='db' id='db' value='$db'>
+              <input type='hidden' name='id' id='id' value='$id'>
+            </form>";
+    }
+
     function createAddEditTable($tablename, $id="") {
       $db = "users";
       $showcolumns = "SHOW COLUMNS FROM $db";
@@ -19,6 +41,10 @@
       $restrictedstring = "id";
       $columns = getDBColumns($showcolumns, $restrictedstring);
 =======
+
+      $columns = getDBColumns($showcolumns);
+
+      $restrictedarray = ['id'];
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
       if (isset($_POST['id'])){
@@ -76,6 +102,53 @@
       echo $table;
     }
 
+    function addNew($db,$id=""){
+      $db = $_POST['db'];
+
+      $body = $this->getAddEditForm($db,$id);
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+
+    }
+
+    function getAddEditForm($db,$id){
+      $s = "<table class='table'>
+              <thead>
+                <tr>
+                  <th scope='col'>#</th>
+                  <th scope='col'>First</th>
+                  <th scope='col'>Last</th>
+                  <th scope='col'>Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope='row'>1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope='row'>2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope='row'>3</th>
+                  <td colspan='2'>Larry the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>";
+
+      return $s;
+    }
+
     function Validate($username,$password){
 
       $sql= "SELECT * FROM users
@@ -116,40 +189,6 @@
       $result = runSQL($sql);
       $_POST['action']= '';
       echo header('Location: index.php');
-    }
-
-    function CreateEditTable($id) {
-      $showcols = "SHOW COLUMNS FROM users";
-      //$colheadings = runSQL($showcols);
-      //$id = $userdata['id'];
-      //print_r($colheadings->fetch_assoc());
-
-      $colheadings = getDBColumns($sql);
-
-      $sql = "SELECT * FROM users
-        WHERE
-        id = '$id'";
-
-      $user = runSQL($sql);
-
-      $table = "";
-      foreach($user as $attribute){
-        foreach($colheadings as $headings){
-          //$table .= "<label>" . $headings['Field'] . "</label>";
-          //print_r($attribute[$headings['Field']]);
-          echo "<label>" . $headings['Field'] . "</label></br>
-                <input value='". $attribute[$headings['Field']] . "'></br>";
-        }
-      }
-
-
-      //print_r($user);
-
-      // while($columns = $user->fetch_assoc()){
-      //   $table .= "<label>" . $columns .  "</label></br>";
-      // }
-      // $table .= "</table>
-      //            <button class='btn btn-primary' class='button' type='submit' value='update'>Save Changes</button>";
     }
 
     function UpdateUser($user) {

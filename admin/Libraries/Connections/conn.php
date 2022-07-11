@@ -1,5 +1,4 @@
 <?php
-  //define("BASE_DIR", str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__)))."/");
   require_once(BASE_DIR . "config.php");
 
   function mySQLI($sql){
@@ -44,6 +43,8 @@
 <<<<<<< HEAD
   function getDBColumns($db, $fields){
 =======
+  function getDBColumns($table, $fields){
+    $fields = "";
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     if($fields != ""){
       $fields = explode(",", $fields);
@@ -56,13 +57,16 @@
       $fields = implode(",", $newFields);
       $sql = "SHOW COLUMNS FROM $db WHERE Field NOT IN ($fields)";
 =======
+      $fields = implode(",",$newFields);
+      $sql = "SHOW COLUMNS FROM $table WHERE Field NOT IN ($fields)";
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     }else{
-      $sql = "SHOW COLUMNS FROM $db";
+      $sql = "SHOW COLUMNS FROM $table";
     }
 
     $result = runSQL($sql);
     $fields = array();
+    
     while($row = $result->fetch_assoc()){
       $fields[] = $row;
     }

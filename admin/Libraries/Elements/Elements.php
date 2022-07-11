@@ -74,8 +74,16 @@
     echo "<form method=post style='float:right'>
             <button type='button' class='btn btn-success' id='addBtn' name='addBtn' onclick='ShowCreateAddEditModal()'>Add</button>
 =======
+  function createTable($sql, $tablename, $restrictedarray, $buttons=""){
+    $columns = getDBColumns($tablename, $restrictedarray);
+    echo "<form method='post'>
+            <input type='submit' name='addNew' id='addNew' value='Add Record'  class='btn btn-success'>
+            <input type='hidden' name='db' id='db' value='$tablename'>
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
           </form>";
+    echo "<button class='btn btn-success' type='button' id='btnAdd' type='btnAdd' onclick='AjaxModal()' style='float: right'>Add record</button>
+          <table class='table table-striped'>
+          <thead>";
 
     foreach($columns as $column){
       echo "<th>{$column['Field']}</th>";
@@ -104,6 +112,12 @@
 <<<<<<< HEAD
       getTools($tablename,$row['id'], "selected", );
 =======
+      echo "<td>";
+      if($buttons == ""){
+        getTools($tablename, $row['id']);
+      }else{
+        getTools($tablename, $row['id']);
+      }
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
       echo "</td>";
       echo "</tr>";
@@ -236,41 +250,66 @@
 
     foreach($columns as $value) {
       array_push($formfields, $value['Field']);
+=======
+  function CreateAddEditModal($body){
+    echo "<div class='modal fade' id='AddEditModal' name='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+      <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title' id='exampleModalLabel'>Add/Edit Record</h5>
+            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>
+          <div class='modal-body' id='addeditModal' >";
+          echo $body;
+    echo  "</div>
+          <div class='modal-footer'>
+            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+            <button type='button' class='btn btn-primary'>Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>";
+  }
+
+  function ShowColumns($db, $id=''){
+    $showcolumns = 'SHOW COLUMNS FOR ' . $db;
+
+    $columns = getDBColumns($tablename, $restrictedstring, $id);
+
+    foreach($columns as $column){
+      $name = $column['Field'];
+
+      echo Label($name) . ":</br>";
+      echo "<input id='$name' name='$name' type='text'></br>";
+    }
+  }
+
+  function AddEditForm($sql, $db, $restrictedstring, $id=''){
+    $showcolumns = 'SHOW COLUMNS FOR ' . $db;
+
+    $columns = getDBColumns($tablename, $restrictedstring, $id);
+
+    $result = runSQL($sql);
+
+    if ($id != '') {
+      $row = $result->fetch_assoc();
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     }
 
-    if ($id != ''){
-      $sql = "SELECT * FROM " . $tablename .
-             " WHERE
-              id = " . $id;
+    echo "<form method='post'>";
+    foreach($columns as $column){
+      $name = $column['Field'];
 
-      $data = runSQL($sql);
-      $rows = $data->fetch_assoc();
-    }
-
-    $form = "<form method='post'>";
-    foreach($formfields as $field){
-      if(!(in_array($field, $restrictedarray))){
-        $form .= "<div class='form-group'>"
-                    . Label($field) . "</br>";
-                    if ($id == '') {
-                      $form .= Input($field, "text");
-                    }
-                    else {
-                      $form .= Input($field, "text", $rows[$field]);
-                    }
-                    $form .= "</div>";
+      echo Label($name) . ":</br>";
+      if ($id = '') {
+          echo "<input id='$name' name='$name' type='text'></br>";
+      } else {
+        echo "<input id='$name' name='$name' type='text' value='$row[$name]'></br>";
       }
     }
-    $form .= ";
-               <button type='submit' class='btn btn-primary' id='action' name='action'";
-    if ($id == ''){
-      $form .= "value='addrecord'>Add Record</button>";
-    } else {
-      $form .= "value='updaterecord'>Update Record</button>
-                <input type='hidden' id='id' name='id' value='$id'>";
-    }
-    $form .= "</form></div>";
-
-    return $form;
+    echo "<button type='submit' class='btn btn-primary' id='addRecord' name='addRecord'>Save</button>
+    </form>";
   }
   ?>

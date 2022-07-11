@@ -4,6 +4,9 @@
   require_once("../../Libraries/Elements/Elements.php");
 <<<<<<< HEAD
   echo "<script src='../../Libraries/Users/users.js'></script>";
+=======
+  require_once("../../../config.php");
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
   echo "<pre>" . print_r($_POST) . "</pre>";
   $user = new User();
@@ -49,5 +52,41 @@
   $modal = createAddEditModal($sql, $table, $addrecordrestrictedstring);
   echo $modal;
 =======
+  echo "<pre>" . print_r($_POST) . "</pre>";
+  if($_POST['addNew'] == "Add Record"){
+    // echo "YEGOADSHF";
+    $user->addNew($_POST['db']);
+  }
+
+  if (isset($_POST['action'])){
+    if($_POST['action'] == "AddModal"){
+      echo "<p>Test</p>";
+    }
+
+    
+  } else {
+     $user->init();
+  }
+
+  CreateAddEditModal("");
+
+  // echo "</body>";
+  // echo "</html>";
+
+  // echo "<script> function AjaxModalasdflkjasd() {
+  //   $.ajax({
+
+  //       url: '../Users/index.php',
+  //       method: 'post',
+  //       data: {action: 'AddModal', id: 3},
+  //       dataType: 'html',
+  //       success: function(html){
+  //           $('#addeditModal').append(html);
+  //           $('#AddEditModal').modal('show');
+  //           }
+  //   });
+  // }
+  // </script>"
+  //window.location.href = 'http://localhost/Boddaert/admin/Modules/Users/index.php';
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 ?>

@@ -9,6 +9,7 @@
 <<<<<<< HEAD
   $sessionvariable = 1;
 =======
+  echo "<p>Selections</p>";
 >>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
   if (!($_POST['action'] = '')){
