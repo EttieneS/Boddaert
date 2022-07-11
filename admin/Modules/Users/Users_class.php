@@ -13,7 +13,6 @@
 
       $columns = getDBColumns($showcolumns);
 
-      //$tablearray = runSQL($sql);
       $restrictedarray = ['id'];
 
       if (isset($_POST['id'])){

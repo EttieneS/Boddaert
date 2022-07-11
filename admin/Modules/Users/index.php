@@ -2,6 +2,7 @@
   require_once("Users_class.php");
   require_once("../../Includes/header.php");
   require_once("../../Libraries/Elements/Elements.php");
+  echo "<script src='../../Libraries/Users/users.js'></script>";
 
   $user = new User();
 
@@ -31,13 +32,24 @@
       $result = $user->DeleteUser($_POST);
     }
   } else {
+      $sql = "SELECT * FROM users";
       $tablename = 'users';
       $restrictedarray = array("id");
-      $buttons[] = array( array('type' => 'edit'),
-                          array('type' => 'delete'));
+      $restrictedstring = "id";
+      $buttons[] = array();
 
-      $table = Table($tablename, $restrictedarray, $buttons);
+      //function createTable($sql, $tablename, $restrictedarray){
+      $table = createTable($sql, $tablename, $restrictedstring, $buttons);
 
-      echo $table;
+      //echo $table;
   }
+
+  // $addeditmodal = CreateAddEditModal();
+  // echo $addeditmodal;
+
+  $table .= CreateAddEditModal();
+  echo $table;
+
+  echo "</body>";
+  echo "</html>";
 ?>

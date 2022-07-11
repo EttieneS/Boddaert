@@ -5,39 +5,18 @@
 
   $horse = new Horse();
 
-  
-  if ($_POST['addNew']=="Add"){
-    //CALL MODAL
-    createModal();
+  if (isset($_POST['action'])){
+    if ($_POST['addNew'] =="Add"){
+      //CALL MODAL
+      //createModal();
+    }
+  } else {
+    $table = $horse->GetAllHorses();
+    echo $table;
   }
-  // if (isset($_POST['action'])){
-  //   if ($_POST['action'] == 'selecthorses'){
-  //     $checked = $_POST['selected'];
-  //     $list = implode(',', $checked);
-  //     print_r($list);
+  
+  $addModal = AddEditModal();
+  echo $addModal;
 
-  //     $result = $horse->AddSelection($list);
-  //   }
-  //   if ($_POST['action'] == 'addtable'){
-  //     $table = $horse->CreateAddEditTable($_POST['db']);
-  //     echo $table;
-  //   }
-
-  //   if ($_POST['action'] == 'edittable'){
-  //     $db = $_POST['db'];
-
-  //     $table = $horse->CreateAddEditTable($_POST['db'], $_POST['id']);
-  //     echo $table;
-  //   }
-
-  //   if ($_POST['action'] == 'add'){
-  //     $result = $horse->Add();
-  //   } else if ($_POST['action'] == 'update'){
-  //     $result = $horse->Update();
-  //   }
-  // } else {
-      $table = $horse->GetAllHorses();
-      echo $table;
-  // }
-  echo '<pre>'.print_r($_POST,true).'</pre>';
+  include("../../Includes/footer.php");
 ?>

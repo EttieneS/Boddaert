@@ -54,14 +54,15 @@
             </form>";
   }
 
-  function createTable($sql,$tablename, $restrictedarray=""){
-    $columns = getDBColumns($tablename,$restrictedarray);
+  function createTable($sql, $tablename, $restrictedarray, $buttons){
+    $columns = getDBColumns($tablename, $restrictedarray);
 
     echo "<form method=post style='float:right'>
-            <input type='submit' name='addNew' id='addNew' value='Add' class='btn btn-success'>
+            <input type='submit' name='addNew' id='addNew' value='Add' onclick='OpenAddEditModal()' class='btn btn-success'>
           </form>";
     echo "<table class='table table-striped'>";
     echo "<thead>";
+
     foreach($columns as $column){
       echo "<th>{$column['Field']}</th>";
     }
@@ -82,8 +83,6 @@
     }
 
     echo "</table>";
-
-    
   }
 
   function getTools($db,$id){
@@ -98,7 +97,7 @@
 
   function createModal(){
     echo "<script>
-           
+
           </script>";
     echo "<div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
             <div class='modal-dialog'>
@@ -119,79 +118,30 @@
           </div>";
   }
 
+  function CreateAddEditModal() {
+    $modal =  "<div class='modal fade' id='AddEditModal' name='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+      <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title' id='exampleModalLabel'>Add/Edit Record</h5>
+            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>
+          <div class='modal-body'>
+            <p>Add/Edit</p>
+          </div>
+          <div class='modal-footer'>
+            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+            <button type='button' class='btn btn-primary'>Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>";
 
-  // function Table($tablename, $restrictedarray, $buttons){
-  //   $formfields = array();
 
-  //   $showcolumns = "SHOW COLUMNS FROM " . $tablename;
-  //   $columns = getDBColumns($showcolumns);
-
-  //   foreach($columns as $value) {
-  //     array_push($formfields, $value['Field']);
-  //   }
-
-  //   $table = "<div>
-  //               <table>
-  //                 <tr>
-  //                   <thead>";
-  //   foreach($formfields as $heading){
-  //     if(!(in_array($heading, $restrictedarray))){
-  //       $table .= TH($heading);
-  //     }
-  //   }
-  //   if(isset($buttons)){
-  //     foreach($buttons as $button){
-  //         $table .= TH("");
-  //     }
-  //   }
-
-  //   $table .=   "</thead>
-  //             </tr>";
-
-  //   $selectall = "SELECT * FROM " . $tablename;
-  //   $tabledata = runSQL($selectall);
-  //   $id = "";
-
-  //   while ($row = $tabledata->fetch_assoc()){
-  //     $id = ($row['id']);
-  //     $table .= "<tr>";
-  //     foreach($formfields  as $value){
-  //       if(!(in_array($value, $restrictedarray))){
-  //         $table .= TD($row[$value]);
-  //       }
-  //     }
-  //     if(!(empty($buttons))){
-  //       foreach($buttons as $button){
-  //         foreach($button as $value){
-  //           $table .=  "<td>";
-  //           if($value['type'] == "edit"){
-  //             $table .= EditFormButton($id, $tablename);
-  //           }
-  //           if($value['type'] == "select"){
-  //             $table .= SelectFormInput($id, "Select", "selected");
-  //           }
-  //           if($value['type'] == "function") {
-  //             $table .= FunctionButton($value['functionname'], $id, $value['text']);
-  //           }
-  //           if($value['type'] == "delete") {
-  //             $table .= DeleteFormButton($id);
-  //           }
-
-  //           $table .= "</td>";
-  //         }
-  //       }
-  //     }
-  //     $table .= "</tr>";
-  //   }
-  //   $table .= "</table>
-  //           </form>
-  //           <form method='post'>
-  //             <button id='add' name='action' type='submit' class='btn btn-primary' value='addtable'>Add</button>
-  //           </form>
-  //         <div>";
-
-  //    return $table;
-  // }
+    echo $modal;
+  }
 
   function CreateAddEditTable($tablename,  $restrictedarray, $id=''){
     $formfields = array();
