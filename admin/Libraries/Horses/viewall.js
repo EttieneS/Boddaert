@@ -32,7 +32,6 @@ var selectionarray;
 function selectHorse(horse){
   var id = horse.id;
   alert("horseid " + id);
-  //selectionarray.push(id);
 }
 
 function saveSelection() {
@@ -68,18 +67,22 @@ function deleteUser(user){
     });
 }
 
-// $.ajax({
-//   url: "../../Controllers/usercontroller.php",
-//   method: 'post',
-//   data: {
-//     action: 'add',
-//     user: user
-//   },
-//   type: "application/json",
-//   success: function(response) {
-//       alert(response);
-//   },
-//   error: function(jqXHR, textStatus, errorThrown){
-//     alert("error");
-//   }
-// });
+$(document).ready( function() {
+  $('#exampleModal').modal('hide');
+});
+
+function detailsModal() {
+  $('#exampleModal').modal('show');
+}
+
+function closeModal() {
+  $('#exampleModal').modal('hide');
+}
+
+function ShowCreateAddEditModal(){
+  $('#addeditModal').modal('show');
+}
+
+function CloseCreateAddEditModal(){
+  $('#addeditModal').modal('hide');
+}

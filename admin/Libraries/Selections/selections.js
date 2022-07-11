@@ -1,5 +1,5 @@
 $(document).ready( function() {
-  $('#exampleModal').modal('hide'));
+  $('#exampleModal').modal('hide');
 });
 
 function detailsModal() {
@@ -8,4 +8,12 @@ function detailsModal() {
 
 function closeModal() {
   $('#exampleModal').modal('hide');
+}
+
+function ShowCreateAddEditModal(){
+  $('#addeditModal').modal('show');
+}
+
+function CloseCreateAddEditModal(){
+  $('#addeditModal').modal('hide');
 }

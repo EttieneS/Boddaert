@@ -1,5 +1,7 @@
 <?php
   require_once("../../../config.php");
+  echo "<script href='../../Horses/horse.js'></script>";
+  require_once("../../Libraries/Elements/Elements.php");
 
   class User {
     var $username="";
@@ -10,11 +12,8 @@
     function createAddEditTable($tablename, $id="") {
       $db = "users";
       $showcolumns = "SHOW COLUMNS FROM $db";
-
-      $columns = getDBColumns($showcolumns);
-
-      //$tablearray = runSQL($sql);
-      $restrictedarray = ['id'];
+      $restrictedstring = "id";
+      $columns = getDBColumns($showcolumns, $restrictedstring);
 
       if (isset($_POST['id'])){
         $id = $_POST['id'];
@@ -89,52 +88,12 @@
     }
 
     function getAllUsers(){
-      // $sql = "SELECT * FROM users";
-      //
-      // $arrHeadings = array("id","username");
-      // $restrictedarray = ["id", "password"];
-      //
-      // $result = runSQL($sql);
-      //
-      // $table = "<form method='post'>
-      //             <table class='table table-striped'>
-      //               <tr>
-      //                 <thead>";
-      // foreach($arrHeadings as $heading){
-      //   if (!(in_array($heading, $restrictedarray))){
-      //       $table .= TH($heading);
-      //   }
-      // }
-      // $table .= TH("Actions") .
-      //            " </thead>
-      //            </tr>";
-      //
-      // while ($row = $result->fetch_assoc()){
-      //   $table .= "<tr>";
-      //   foreach($arrHeadings as $heading){
-      //     if ($heading == 'id'){
-      //       $id = $row[$heading];
-      //     }
-      //     if (!(in_array($heading, $restrictedarray))){
-      //         $table .= TD($row[$heading]);//"<td>". $row[$heading] . "</td>"; //TD($row[$heading]);
-      //     }
-      //   }
-      //   $table .= " <td>
-      //                 <form>
-      //                   <button class='btn btn-primary' type='submit' name='action' value='edit'>Edit</button>
-      //                   <input type='hidden' value='$id' id='id' name='id'>
-      //                   <input type='hidden' name='db' id='db' value='users'>
-      //                 </form>
-      //               </td>
-      //             </tr>";
-      // }
-      //
-      // $table .= "</table>
-      //           </form>
-      //           <form method='post'>
-      //             <button class='btn btn-primary' name='action' value='add' type='submit'>Add User</button>
-      //             <input type='hidden' name='db' id='db' value='users'>
-      //           </form>";
+      $sql = "SELECT * FROM horses";
+      $tablename = "horses";
+      $restrictedarray = "id";
+
+      createTable($sql, $tablename, $restrictedarray);
+
       echo $table;
     }
 
@@ -208,6 +167,8 @@
       $sql = "DELETE FROM users
         WHERE
         id = '$id'";
+
+      echo $sql;
 
       $result = runSQL($sql);
       echo $result;

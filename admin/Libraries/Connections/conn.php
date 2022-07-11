@@ -41,20 +41,20 @@
     return $result;
   }
 
-  function getDBColumns($db,$fields){
+  function getDBColumns($db, $fields){
     if($fields != ""){
-      $fields = explode(",",$fields);
+      $fields = explode(",", $fields);
 
       foreach($fields as $field){
-        $newFields[] = "'".$field."'";
+        $newFields[] = "'". $field ."'";
       }
 
-      $fields = implode(",",$newFields);
+      $fields = implode(",", $newFields);
       $sql = "SHOW COLUMNS FROM $db WHERE Field NOT IN ($fields)";
     }else{
       $sql = "SHOW COLUMNS FROM $db";
     }
-    
+
     $result = runSQL($sql);
     $fields = array();
     while($row = $result->fetch_assoc()){

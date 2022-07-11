@@ -1,16 +1,12 @@
 <?php
   require_once("../../../config.php");
   require_once("Horse_class.php");
-  include("../../Includes/header.php");
+  require("../../Includes/header.php");
+  echo "<script src='../../Libraries/Horses/horses.js'></script>";
 
   $horse = new Horse();
 
-  
-  if ($_POST['addNew']=="Add"){
-    //CALL MODAL
-    createModal();
-  }
-  // if (isset($_POST['action'])){
+  if (isset($_POST['action'])){
   //   if ($_POST['action'] == 'selecthorses'){
   //     $checked = $_POST['selected'];
   //     $list = implode(',', $checked);
@@ -35,9 +31,11 @@
   //   } else if ($_POST['action'] == 'update'){
   //     $result = $horse->Update();
   //   }
-  // } else {
+  } else {
       $table = $horse->GetAllHorses();
       echo $table;
-  // }
+  }
+
   echo '<pre>'.print_r($_POST,true).'</pre>';
+  echo "</body>";
 ?>
