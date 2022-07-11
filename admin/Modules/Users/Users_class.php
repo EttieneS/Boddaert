@@ -7,6 +7,26 @@
 
     function __construct() {}
 
+    function init(){
+      $sql = "SELECT * FROM users";
+      $tablename = 'users';
+      $restrictedarray = array("id");
+      $restrictedstring = "id";
+      $buttons[] = array();
+
+      echo createTable($sql, $tablename, $restrictedstring, $buttons);
+    }
+
+    function getTools($db,$id){
+      echo "<form method=post style='float:right'>
+              <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
+              <input type='submit' name='remove' id='remove' value='Remove' class='btn btn-danger'>
+              <input type='submit' name='View' id='View' value='View' class='btn btn-info'>
+              <input type='hidden' name='db' id='db' value='$db'>
+              <input type='hidden' name='id' id='id' value='$id'>
+            </form>";
+    }
+
     function createAddEditTable($tablename, $id="") {
       $db = "users";
       $showcolumns = "SHOW COLUMNS FROM $db";
