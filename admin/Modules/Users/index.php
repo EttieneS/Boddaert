@@ -19,7 +19,7 @@
       $tablename = "users";
       $restrictedarray = array("id");
 
-      $form = CreateAddEditTable($tablename, $restrictedarray, $id);
+      //$form = CreateAddEditTable($tablename, $restrictedarray, $id);
       echo $form;
     }
     if ($_POST['action'] == 'addrecord'){
@@ -34,14 +34,15 @@
   } else {
      $user->init();
 
-      //echo $table;
+      echo $table;
   }
 
   // $addeditmodal = CreateAddEditModal();
   // echo $addeditmodal;
 
-  // $table .= CreateAddEditModal();
+  echo CreateAddEditModal();
   // echo $table;
+  //echo createModal();
 
   echo "</body>";
   echo "</html>";
