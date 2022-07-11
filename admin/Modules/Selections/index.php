@@ -8,6 +8,6 @@
   $selections= new Selections();
   echo "<p>Selections</p>";
 
-  //$table = $selections->ViewAllTable();
-  //echo $table;
+  $table = $selections->ViewAllTable();
+  echo $table;
 ?>

@@ -54,7 +54,7 @@
             </form>";
   }
 
-  function createTable($sql, $tablename, $restrictedarray, $buttons){
+  function createTable($sql, $tablename, $restrictedarray, $buttons=""){
     $columns = getDBColumns($tablename, $restrictedarray);
 
     echo "<form method=post style='float:right'>
@@ -77,7 +77,11 @@
         echo "<td>{$row[$column['Field']]}</td>";
       }
       echo "<td>";
-      getTools($tablename,$row['id']);
+      if($buttons == ""){
+        getTools($tablename,$row['id']);
+      }else{
+        //do something
+      }
       echo "</td>";
       echo "</tr>";
     }
