@@ -1,13 +1,11 @@
 <?php
   require_once("../../../config.php");
-  
+
   class Selections {
     var $userid = "";
     var $selections = array();
 
     function __construct() {}
-<<<<<<< HEAD
-=======
 
     function ViewAllTable() {
       $tablename = "selections";
@@ -28,6 +26,5 @@
               <input type='hidden' name='id' id='id' value='$id'>
             </form>";
     }
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
   }
 ?>

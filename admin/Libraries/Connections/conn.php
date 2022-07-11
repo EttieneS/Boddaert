@@ -1,23 +1,6 @@
 <?php
   require_once(BASE_DIR . "config.php");
 
-  function mySQLI($sql){
-    $mysqli = mysqli_connect("localhost","root","","labmin");
-
-    if (mysqli_connect_errno()) {
-      echo "Failed to connect to MySQL: " . mysqli_connect_error();
-      exit();
-    }
-
-    $result = $mysqli -> query($sql);
-    if (!($result)){
-      echo ($mysqli->connect_error);
-    }
-
-    $mysqli -> close();
-    return $result;
-  }
-
   function runSQL($sql){
     $conn = new mysqli(getHost(), getDBUser(), getPass(), getDB());
 
@@ -40,33 +23,24 @@
     return $result;
   }
 
-<<<<<<< HEAD
-  function getDBColumns($db, $fields){
-=======
   function getDBColumns($table, $fields){
-    $fields = "";
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     if($fields != ""){
       $fields = explode(",", $fields);
+      print_r($fields);
 
       foreach($fields as $field){
         $newFields[] = "'". $field ."'";
       }
 
-<<<<<<< HEAD
-      $fields = implode(",", $newFields);
-      $sql = "SHOW COLUMNS FROM $db WHERE Field NOT IN ($fields)";
-=======
       $fields = implode(",",$newFields);
       $sql = "SHOW COLUMNS FROM $table WHERE Field NOT IN ($fields)";
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     }else{
       $sql = "SHOW COLUMNS FROM $table";
     }
 
     $result = runSQL($sql);
     $fields = array();
-    
+
     while($row = $result->fetch_assoc()){
       $fields[] = $row;
     }

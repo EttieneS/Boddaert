@@ -1,11 +1,7 @@
 <?php
-<<<<<<< HEAD
   require_once("../../../config.php");
-  echo "<script href='../../Horses/horse.js'></script>";
+  echo "<script href='script/users.js'></script>";
   require_once("../../Libraries/Elements/Elements.php");
-=======
-  //require_once("../../../config.php");
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
   class User {
     var $username="";
@@ -24,7 +20,7 @@
       echo createTable($sql, $tablename, $restrictedstring, $buttons);
     }
 
-    function getTools($db,$id){
+    function getTools($db, $id){
       echo "<form method=post style='float:right'>
               <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
               <input type='submit' name='remove' id='remove' value='Remove' class='btn btn-danger'>
@@ -37,15 +33,11 @@
     function createAddEditTable($tablename, $id="") {
       $db = "users";
       $showcolumns = "SHOW COLUMNS FROM $db";
-<<<<<<< HEAD
+
       $restrictedstring = "id";
       $columns = getDBColumns($showcolumns, $restrictedstring);
-=======
 
-      $columns = getDBColumns($showcolumns);
-
-      $restrictedarray = ['id'];
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
+      $restrictedarray = ("id");
 
       if (isset($_POST['id'])){
         $id = $_POST['id'];
@@ -102,7 +94,7 @@
       echo $table;
     }
 
-    function addNew($db,$id=""){
+    function addNew($db, $id=""){
       $db = $_POST['db'];
 
       $body = $this->getAddEditForm($db,$id);
@@ -112,41 +104,57 @@
               $('#AddEditModal').modal('show');
             });
             </script>";
+    }
 
+    function ViewUser($db, $id=""){
+      $db = $_POST['db'];
+
+      $body = $this->getViewUserForm($db,$id);
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+    }
+
+    function getViewUserForm($db, $id){
+      $db = $_POST['db'];
+      $id = $_POST['id'];
+
+      $restrictedstring = "id";
+      $headings = getDBColumns($db, $restrictedstring);
+
+      $body = "";
+
+      $sql = "SELECT * FROM $db WHERE id = $id";
+      $columns = runSQL($sql);
+      $column = $columns->fetch_assoc();
+
+      foreach($headings as $heading){
+        $name = $heading['Field'];
+        $body .= Label($name) . ': ';
+        $body .= Label($column[$name]) . '</br>';
+      }
+
+      return $body;
     }
 
     function getAddEditForm($db,$id){
-      $s = "<table class='table'>
-              <thead>
-                <tr>
-                  <th scope='col'>#</th>
-                  <th scope='col'>First</th>
-                  <th scope='col'>Last</th>
-                  <th scope='col'>Handle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope='row'>1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope='row'>2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope='row'>3</th>
-                  <td colspan='2'>Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </table>";
+      $db = "users";
 
-      return $s;
+      $restrictedstring = "id";
+      $columns = getDBColumns($db, $restrictedstring);
+
+      $body = "";
+
+      foreach($columns as $column){
+        $name = $column['Field'];
+        $body .= Label($name) . '</br>';
+        $body .= "<input id='$name' name='$name' ></br>";
+      }
+
+      return $body;
     }
 
     function Validate($username,$password){
@@ -159,16 +167,14 @@
       $userdata = $result->fetch_assoc();
       if($userdata['password']==$password && $userdata['username']=="$username"){
         echo "true";
-        //return json_encode("true");
       }else{
-        echo "false";
-        //return json_encode("false");
+        echo "false";        
       }
     }
 
     function getAllUsers(){
-      $sql = "SELECT * FROM horses";
-      $tablename = "horses";
+      $sql = "SELECT * FROM users";
+      $tablename = "users";
       $restrictedarray = "id";
 
       createTable($sql, $tablename, $restrictedarray);
