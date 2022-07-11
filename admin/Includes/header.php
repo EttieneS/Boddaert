@@ -14,6 +14,10 @@
     <script src="../../Libraries/jQuery/jQuery.js"></script>
     <!-- END -->
 
+    <!--Custom JS -->
+    <script src="../../Libraries/Elements/script/js.js"></script>
+    <!-- END -->
+
     <title>Boddaert</title>
 </head>
 <body>

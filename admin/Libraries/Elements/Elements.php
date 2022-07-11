@@ -54,6 +54,7 @@
             </form>";
   }
 
+<<<<<<< HEAD
   function createAddEditForm($sql, $tablename, $restrictedarray, $buttons, $id=""){
     $columns = getDBColumns($tablename,$restrictedarray);
 
@@ -72,9 +73,10 @@
 
     echo "<form method=post style='float:right'>
             <button type='button' class='btn btn-success' id='addBtn' name='addBtn' onclick='ShowCreateAddEditModal()'>Add</button>
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
           </form>";
-    echo "<table class='table table-striped'>";
-    echo "<thead>";
+
     foreach($columns as $column){
       echo "<th>{$column['Field']}</th>";
     }
@@ -99,7 +101,10 @@
       }
 
       echo "<td>";
+<<<<<<< HEAD
       getTools($tablename,$row['id'], "selected", );
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
       echo "</td>";
       echo "</tr>";
     }
@@ -117,6 +122,7 @@
           </form>";
   }
 
+<<<<<<< HEAD
   function createAddEditModal($sql, $tablename, $restrictedstring, $id='') {
       $row = array();
       $restrictedarray = explode(",", $restrictedstring);

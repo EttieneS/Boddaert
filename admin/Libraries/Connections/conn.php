@@ -41,7 +41,10 @@
     return $result;
   }
 
+<<<<<<< HEAD
   function getDBColumns($db, $fields){
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     if($fields != ""){
       $fields = explode(",", $fields);
 
@@ -49,8 +52,11 @@
         $newFields[] = "'". $field ."'";
       }
 
+<<<<<<< HEAD
       $fields = implode(",", $newFields);
       $sql = "SHOW COLUMNS FROM $db WHERE Field NOT IN ($fields)";
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
     }else{
       $sql = "SHOW COLUMNS FROM $db";
     }

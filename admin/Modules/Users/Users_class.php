@@ -1,7 +1,10 @@
 <?php
+<<<<<<< HEAD
   require_once("../../../config.php");
   echo "<script href='../../Horses/horse.js'></script>";
   require_once("../../Libraries/Elements/Elements.php");
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
   class User {
     var $username="";
@@ -12,8 +15,11 @@
     function createAddEditTable($tablename, $id="") {
       $db = "users";
       $showcolumns = "SHOW COLUMNS FROM $db";
+<<<<<<< HEAD
       $restrictedstring = "id";
       $columns = getDBColumns($showcolumns, $restrictedstring);
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
       if (isset($_POST['id'])){
         $id = $_POST['id'];

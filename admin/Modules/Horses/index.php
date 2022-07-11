@@ -7,6 +7,7 @@
   $horse = new Horse();
 
   if (isset($_POST['action'])){
+<<<<<<< HEAD
   //   if ($_POST['action'] == 'selecthorses'){
   //     $checked = $_POST['selected'];
   //     $list = implode(',', $checked);

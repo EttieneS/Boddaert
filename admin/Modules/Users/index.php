@@ -2,11 +2,13 @@
   require_once("Users_class.php");
   require_once("../../Includes/header.php");
   require_once("../../Libraries/Elements/Elements.php");
+<<<<<<< HEAD
   echo "<script src='../../Libraries/Users/users.js'></script>";
 
   echo "<pre>" . print_r($_POST) . "</pre>";
   $user = new User();
 
+<<<<<<< HEAD
   if (isset($_POST['action'])){
     if ($_POST['action'] == 'add'){
       $tablename = "users";
@@ -46,4 +48,6 @@
 
   $modal = createAddEditModal($sql, $table, $addrecordrestrictedstring);
   echo $modal;
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 ?>

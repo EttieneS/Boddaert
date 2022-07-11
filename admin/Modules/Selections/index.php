@@ -6,7 +6,10 @@
   echo "<script src='../../Libraries/Selections/selections.js'></script>";
 
   $selections= new Selections();
+<<<<<<< HEAD
   $sessionvariable = 1;
+=======
+>>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
   if (!($_POST['action'] = '')){
     if ($_POST['action'] == 'View'){
