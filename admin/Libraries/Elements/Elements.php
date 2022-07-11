@@ -56,6 +56,10 @@
 
   function createTable($sql, $tablename, $restrictedarray, $buttons=""){
     $columns = getDBColumns($tablename, $restrictedarray);
+    echo "<form method='post'>
+            <input type='submit' name='addNew' id='addNew' value='Add Record'  class='btn btn-success'>
+            <input type='hidden' name='db' id='db' value='$tablename'>
+          </form>";
     echo "<button class='btn btn-success' type='button' id='btnAdd' type='btnAdd' onclick='AjaxModal()' style='float: right'>Add record</button>
           <table class='table table-striped'>
           <thead>";
@@ -97,30 +101,7 @@
           </form>";
   }
 
-  function createModal(){
-    echo "<script>
-
-          </script>";
-    echo "<div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-            <div class='modal-dialog'>
-              <div class='modal-content'>
-                <div class='modal-header'>
-                  <h5 class='modal-title' id='exampleModalLabel'>Modal title</h5>
-                  <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                </div>
-                <div class='modal-body'>
-                  ...
-                </div>
-                <div class='modal-footer'>
-                  <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                  <button type='button' class='btn btn-primary'>Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>";
-  }
-
-  function CreateAddEditModal(){
+  function CreateAddEditModal($body){
     echo "<div class='modal fade' id='AddEditModal' name='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
       <div class='modal-dialog' role='document'>
         <div class='modal-content'>
@@ -131,7 +112,7 @@
             </button>
           </div>
           <div class='modal-body' id='addeditModal' >";
-
+          echo $body;
     echo  "</div>
           <div class='modal-footer'>
             <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
