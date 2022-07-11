@@ -11,8 +11,8 @@
       $tablename = "users";
       $restrictedarray = array("id");
 
-      $form = CreateAddEditTable($tablename, $restrictedarray);
-      echo $form;
+      echo CreateAddEditTable($tablename, $restrictedarray);
+
     }
     if ($_POST['action'] == 'edittable'){
       $id = $_POST['id'];
@@ -32,14 +32,7 @@
       $result = $user->DeleteUser($_POST);
     }
   } else {
-      $sql = "SELECT * FROM users";
-      $tablename = 'users';
-      $restrictedarray = array("id");
-      $restrictedstring = "id";
-      $buttons[] = array();
-
-      //function createTable($sql, $tablename, $restrictedarray){
-      $table = createTable($sql, $tablename, $restrictedstring, $buttons);
+     $user->init();
 
       //echo $table;
   }
@@ -47,8 +40,8 @@
   // $addeditmodal = CreateAddEditModal();
   // echo $addeditmodal;
 
-  $table .= CreateAddEditModal();
-  echo $table;
+  // $table .= CreateAddEditModal();
+  // echo $table;
 
   echo "</body>";
   echo "</html>";
