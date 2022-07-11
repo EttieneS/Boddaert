@@ -1,5 +1,5 @@
 <?php
-  require_once("../../../config.php");
+  //require_once("../../../config.php");
 
   class User {
     var $username="";
@@ -13,6 +13,7 @@
       $restrictedarray = array("id");
       $restrictedstring = "id";
       $buttons[] = array();
+      $db = "users";
 
       echo createTable($sql, $tablename, $restrictedstring, $buttons);
     }
@@ -91,10 +92,12 @@
     }
 
     function addNew($db,$id=""){
-      echo "HI";
+      $db = $_POST['db'];
+
       $body = $this->getAddEditForm($db,$id);
-      
       echo CreateAddEditModal($body);
+      echo "<script>$('#AddEditModal').modal('toggle');</script>";
+
     }
 
     function getAddEditForm($db,$id){
@@ -211,40 +214,6 @@
       $result = runSQL($sql);
       $_POST['action']= '';
       echo header('Location: index.php');
-    }
-
-    function CreateEditTable($id) {
-      $showcols = "SHOW COLUMNS FROM users";
-      //$colheadings = runSQL($showcols);
-      //$id = $userdata['id'];
-      //print_r($colheadings->fetch_assoc());
-
-      $colheadings = getDBColumns($sql);
-
-      $sql = "SELECT * FROM users
-        WHERE
-        id = '$id'";
-
-      $user = runSQL($sql);
-
-      $table = "";
-      foreach($user as $attribute){
-        foreach($colheadings as $headings){
-          //$table .= "<label>" . $headings['Field'] . "</label>";
-          //print_r($attribute[$headings['Field']]);
-          echo "<label>" . $headings['Field'] . "</label></br>
-                <input value='". $attribute[$headings['Field']] . "'></br>";
-        }
-      }
-
-
-      //print_r($user);
-
-      // while($columns = $user->fetch_assoc()){
-      //   $table .= "<label>" . $columns .  "</label></br>";
-      // }
-      // $table .= "</table>
-      //            <button class='btn btn-primary' class='button' type='submit' value='update'>Save Changes</button>";
     }
 
     function UpdateUser($user) {
