@@ -24,13 +24,14 @@
     if ($_POST['action'] == 'View'){
       $result = $user->ViewUser($_POST['db']);
     }
-    if ($_POST['action'] == 'ShowEditModal'){
-      echo "<script>ShowCreateAddEditModal()</script>";
+    if ($_POST['action'] == 'Edit'){
+      $user->Edit($_POST['db'], $_POST['id']);
     }
     if ($_POST['action'] == 'addrecord'){
       $result = $user->AddUser();
     }
     if ($_POST['action'] == 'updaterecord'){
+
       $result = $user->UpdateUser($_POST);
     }
     if ($_POST['action'] == 'Delete'){
@@ -45,6 +46,6 @@
       $table = createTable($sql, $tablename, $restrictedarray, $buttons);
       echo $table;
   }
-    
+
   CreateAddEditModal("");
 ?>

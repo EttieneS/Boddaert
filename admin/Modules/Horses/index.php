@@ -7,7 +7,7 @@
   $horse = new Horse();
 
   if (isset($_POST['action'])){
-<<<<<<< HEAD
+
   //   if ($_POST['action'] == 'selecthorses'){
   //     $checked = $_POST['selected'];
   //     $list = implode(',', $checked);
@@ -39,7 +39,6 @@
 
   echo '<pre>'.print_r($_POST,true).'</pre>';
   echo "</body>";
-=======
     if ($_POST['addNew'] =="Add"){
       //CALL MODAL
       //createModal();
@@ -48,10 +47,9 @@
     $table = $horse->GetAllHorses();
     echo $table;
   }
-  
+
   $addModal = AddEditModal();
   echo $addModal;
 
   include("../../Includes/footer.php");
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 ?>

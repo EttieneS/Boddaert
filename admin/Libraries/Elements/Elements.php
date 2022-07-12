@@ -97,7 +97,7 @@
 
   function getTools($db, $id){
     echo "<form method=post style='float:right'>
-            <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
+            <input type='submit' name='action' id='edit' value='Edit' class='btn btn-warning'>
             <input type='submit' name='action' id='remove' value='Delete' class='btn btn-danger'>
             <input type='submit' name='action' id='View' value='View' class='btn btn-info'>
             <input type='hidden' name='db' id='db' value='$db'>
@@ -105,64 +105,15 @@
           </form>";
   }
 
-  function createViewModel($tablename,  $restrictedstring, $id=''){
-    $row = array();
-
-    $restrictedarray = explode(",", $restrictedstring);
-
-    echo "<div class='modal fade' id='addeditModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-            <div class='modal-dialog'>
-              <div class='modal-content'>
-                <div class='modal-header'>
-                  <h5 class='modal-title' id='addeditModalLabel'>Modal title</h5>
-                  <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                </div>
-                <div class='modal-body'>";
-
-     $headings = getDBColumns($tablename, $restrictedstring);
-     if ($id != ''){
-       $getrecord = "SELECT * FROM " . $tablename . " WHERE id = " . $id;
-       $columns = runSQL($getrecord);
-       $row = $columns->fetch_assoc();
-     }
-
-     $form = "<form method=post style='float:left'>";
-     foreach($headings as $heading){
-       $name = $heading['Field'];
-
-       $form .= "<div class='form-group'>";
-          if (!(in_array($name, $restrictedarray))){
-            $form .= Label($heading['Field']) . "</br>";
-          if ($id != ''){
-            $form .= TD(Input($name, "text", $row[$name])) . "</br>";
-          } else {
-            $form .= TD(Input($name, "text")) . "</br>";
-          }
-            $form .= "</div>";
-        }
-     }
-
-     $form .=  "</form>
-                </div>
-                <div class='modal-footer'>
-                  <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                  <button type='button' class='btn btn-primary'>Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>";
-    echo $form;
-  }
-
   function CreateAddEditModal($body){
-    if (isset($_POST['action'])){
-      $action = $_POST['action'];
-      if ($_POST['action'] != 'addNew') {
-        $id = $_POST['id'];
-      } else {
-        $id = '';
-      }
-    }
+    // if (isset($_POST['action'])){
+    //   $action = $_POST['action'];
+    //   if ($_POST['action'] != 'addNew') {
+    //     $id = $_POST['id'];
+    //   } else {
+    //     $id = '';
+    //   }
+    // }
 
     echo  "<div class='modal fade' id='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
         <div class='modal-dialog' role='document'>
@@ -179,16 +130,75 @@
               }
     echo   "</div>
             <div class='modal-footer'>
-              <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='CloseAddEditModal()'>Close</button>";
-              if ($action == 'addNew' ){
-                echo "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='addRecord'>Save changes</button>";
-              } else if ($action == 'edit') {
-                echo "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='updateRecord'>Save changes</button>";
-              }
-
-    echo    "</div>
+              <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='CloseAddEditModal()'>Close</button>
+            </div>
           </div>
         </div>
       </div>";
   }
+
+  function GetAddEditForm($db,$id=''){
+    $db = "users";
+    $sql = "";
+    $column = "";
+    $action = $_POST['action'];
+
+    $body = "<form method='post'>";
+    //$body = "<input type='hidden' id'id' name='id' value='$id' >";
+
+    if ($action == 'Edit'){
+      $id = $_POST['id'];
+      $sql = "SELECT * FROM " . $db . " WHERE id = " . $id;
+      $body .= "<input type='hidden' id='id' name='id' value='$id' >";
+
+      $columns = runSQL($sql);
+      $column = $columns->fetch_assoc();
+    }
+
+    $restrictedstring = "id";
+    $headings = getDBColumns($db, $restrictedstring);
+
+
+    foreach($headings as $heading){
+      $name = $heading['Field'];
+      $body .= Label($name) . '</br>';
+      if ($action == 'addNew') {
+          $body .= "<input id='$name' name='$name' ></br>";
+      } else if($action == 'Edit') {
+        $body .= "<input id='$name' name='$name' value='$column[$name]'></br>";
+      }
+    }
+
+    if ($action == 'addNew' ){
+      $body .= "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='addrecord'>Save Record</button>";
+    } else {
+      $body .= "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='updaterecord'>Update Record</button>";
+    }
+    $body .= "</form>";
+
+    return $body;
+  }
+
+  function GetViewForm($db, $id){
+    $db = $_POST['db'];
+    $id = $_POST['id'];
+
+    $restrictedstring = "id";
+    $headings = getDBColumns($db, $restrictedstring);
+
+    $body = "";
+
+    $sql = "SELECT * FROM $db WHERE id = $id";
+    $columns = runSQL($sql);
+    $column = $columns->fetch_assoc();
+
+    foreach($headings as $heading){
+      $name = $heading['Field'];
+      $body .= Label($name) . ': ';
+      $body .= Label($column[$name]) . '</br>';
+    }
+
+    return $body;
+  }
+
   ?>

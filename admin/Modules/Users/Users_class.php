@@ -95,9 +95,18 @@
     }
 
     function addNew($db, $id=""){
-      $db = $_POST['db'];
+      $body = GetAddEditForm($db,$id);
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+    }
 
-      $body = $this->getAddEditForm($db,$id);
+    function Edit($db, $id) {
+      $body = GetAddEditForm($db,$id);
+
       echo CreateAddEditModal($body);
       echo "<script>
             $(document).ready(function(){
@@ -118,7 +127,7 @@
             </script>";
     }
 
-    function getViewUserForm($db, $id){
+    function GetViewUserForm($db, $id){
       $db = $_POST['db'];
       $id = $_POST['id'];
 
@@ -140,23 +149,6 @@
       return $body;
     }
 
-    function getAddEditForm($db,$id){
-      $db = "users";
-
-      $restrictedstring = "id";
-      $columns = getDBColumns($db, $restrictedstring);
-
-      $body = "";
-
-      foreach($columns as $column){
-        $name = $column['Field'];
-        $body .= Label($name) . '</br>';
-        $body .= "<input id='$name' name='$name' ></br>";
-      }
-
-      return $body;
-    }
-
     function Validate($username,$password){
 
       $sql= "SELECT * FROM users
@@ -168,7 +160,7 @@
       if($userdata['password']==$password && $userdata['username']=="$username"){
         echo "true";
       }else{
-        echo "false";        
+        echo "false";
       }
     }
 
