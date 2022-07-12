@@ -3,11 +3,9 @@
   require_once("../../../config.php");
   require_once("Horse_class.php");
   require("../../Includes/header.php");
-
-  echo '<pre>'.print_r($_POST,true).'</pre>';
-
-  $horse = new Horse();
   
+  $horse = new Horse();
+
   if (isset($_POST['action'])){
     if($_POST['action'] == "addNew"){
       $horse->addNew($_POST['db']);
@@ -34,13 +32,7 @@
       echo print_r($_POST);
     }
   } else {
-    $sql = "SELECT * FROM horses";
-    $tablename = 'horses';
-    $restrictedarray = "id";
-    $buttons = array();
-
-    $table = createTable($sql, $tablename, $restrictedarray, $buttons);
-    echo $table;
+    $horse->init();
   }
 
   CreateAddEditModal("");

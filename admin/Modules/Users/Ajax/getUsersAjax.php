@@ -12,7 +12,10 @@
           $pwd_peppered = hash_hmac("sha256", $_POST['password'], $pepper);
 
           if($pwd_peppered === $row['password']){
-              echo "true";              
+              session_start();
+              $_SESSION["logged_in"] = true;
+              $_SESSION["wallet"] = 200;
+              echo "true";
           }else{
               echo "false";
           }

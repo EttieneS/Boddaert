@@ -10,6 +10,22 @@
 
     function __construct() {}
 
+    function init() {
+      session_start()
+
+      if(!isset($_SESSION['logged_in'])){
+        header("Location: http://localhost/Boddaert/login.php");
+      }
+
+      $sql = "SELECT * FROM horses";
+      $tablename = 'horses';
+      $restrictedarray = "id";
+      $buttons = array();
+
+      $table = createTable($sql, $tablename, $restrictedarray, $buttons);
+      echo $table;
+    }
+
     function addNew($db, $id=""){
       $body = GetAddEditForm($db, $id);
       echo CreateAddEditModal($body);

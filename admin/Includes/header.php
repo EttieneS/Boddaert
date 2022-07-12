@@ -16,9 +16,10 @@
 
     <!--Custom JS -->
     <script src="../../Libraries/Elements/script/js.js"></script>
+    <script src="../../script/users.js"></script>
     <!-- END -->
 
-    <title>Boddaert</title>
+    <title>Labmin Pick 6</title>
 </head>
 <body>
     <?php
@@ -33,6 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <?php
+                session_start();
                 $url = "http://localhost/Boddaert/admin/Modules/";
                 $sql = "SELECT * FROM modules WHERE is_active='Yes'";
                 $result = runSQL($sql);
@@ -44,6 +46,17 @@
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
                         </li>";
                 }
+                echo "<li>
+                        <a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()'>Logout</button></a>
+                      </li>
+                      <li>";
+                        echo "R" . $_SESSION['wallet'] . " in your wallet
+                      </li>
+                      <li>";
+                        if ($_SESSION['won'] > 0){
+                          echo "You won R".  $_SESSION['won'] ." in this session";
+                        }
+                      echo "</li>";
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>
