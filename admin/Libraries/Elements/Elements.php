@@ -59,7 +59,7 @@
 
     echo "<form method=post style='float:right'>
             <button type='submit' class='btn btn-success' id='addBtn' name='action' value='addNew'>Add</button>
-            <input type='hidden' id='db' name='db' value='users'>
+            <input type='hidden' id='db' name='db' value='$tablename'>
           </form>";
     echo "<table class='table table-striped'>";
     echo "<thead>";
@@ -106,20 +106,11 @@
   }
 
   function CreateAddEditModal($body){
-    // if (isset($_POST['action'])){
-    //   $action = $_POST['action'];
-    //   if ($_POST['action'] != 'addNew') {
-    //     $id = $_POST['id'];
-    //   } else {
-    //     $id = '';
-    //   }
-    // }
-
     echo  "<div class='modal fade' id='AddEditModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
         <div class='modal-dialog' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class='modal-title' id='exampleModalLabel'>Modal title</h5>
+              <h5 class='modal-title' id='exampleModalLabel'>Add/Edit</h5>
               <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
               </button>
@@ -138,13 +129,11 @@
   }
 
   function GetAddEditForm($db,$id=''){
-    $db = "users";
     $sql = "";
     $column = "";
     $action = $_POST['action'];
 
     $body = "<form method='post'>";
-    //$body = "<input type='hidden' id'id' name='id' value='$id' >";
 
     if ($action == 'Edit'){
       $id = $_POST['id'];
@@ -157,7 +146,6 @@
 
     $restrictedstring = "id";
     $headings = getDBColumns($db, $restrictedstring);
-
 
     foreach($headings as $heading){
       $name = $heading['Field'];

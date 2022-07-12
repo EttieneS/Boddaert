@@ -1,39 +1,38 @@
+"<script src='script/selections.js'></script>";
+
 <?php
   require_once("../../../config.php");
   require_once("Selections_class.php");
   require("../../Includes/header.php");
-  require("../../Libraries/Elements/Elements.php");
-  echo "<script src='../../Libraries/Selections/selections.js'></script>";
+  require_once("../../Libraries/Elements/Elements.php");
 
-  $selections= new Selections();
-<<<<<<< HEAD
+  echo "<pre>" . print_r($_POST) . "</pre>";
+  $selection= new Selections();
   $sessionvariable = 1;
-=======
-  echo "<p>Selections</p>";
->>>>>>> 83f018666253445bbf700183f44f317e6f54e718
 
-  if (!($_POST['action'] = '')){
-    if ($_POST['action'] == 'View'){
-      $result = $user->ViewUser($_POST);
+  if (isset($_POST['action'])){
+    if($_POST['action'] == "addNew"){
+      $selection->addNew($_POST['db']);
     }
-    if ($_POST['action'] == 'Delete'){
-      $result = $user->DeleteUser($_POST);
+    if ($_POST['action'] == 'Edit'){
+      $selection->Edit($_POST['db'], $_POST['id']);
+    }
+    if ($_POST['action'] == 'updaterecord'){
+      echo "update record index";
+      print_r($_POST);
+      //$result = $selection->Update($_POST);
     }
   } else {
-    $viewallsql = "SELECT * FROM selections WHERE userid = 1";
-    $selectionstable = "selections";
+    $sql = "SELECT * FROM selections";
+    $tablename = 'selections';
     $restrictedarray = "id";
-    $buttons = array("selection");
+    $buttons = array();
 
-    $table = createTable($viewallsql, $selectionstable, $restrictedarray, $buttons);
+    $table = createTable($sql, $tablename, $restrictedarray, $buttons);
     echo $table;
-
-    
   }
 
-  $addsql = "SHOW COLUMNS FOR selections";
-  $addrecordrestrictedstring = "id";
-  createAddEditModal($sql, $selectionstable, $addrecordrestrictedstring="");
-
+  CreateAddEditModal("");
   echo "</body>";
+  echo "</html>";
 ?>

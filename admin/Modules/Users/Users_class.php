@@ -193,8 +193,6 @@
       $id = $user['id'];
       $username = $user['username'];
 
-      echo "<pre>" .  print_r($user) . "</pre>";
-
       $sql = "UPDATE users SET
         username = '$username'
         WHERE
@@ -214,7 +212,6 @@
       echo $sql;
 
       $result = runSQL($sql);
-      echo $result;
       $_POST = '';
       echo header('Location: index.php');
     }

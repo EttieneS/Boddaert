@@ -14,13 +14,6 @@
     if($_POST['action'] == "addNew"){
       $user->addNew($_POST['db']);
     }
-    if ($_POST['action'] == 'add'){
-      $tablename = "users";
-      $restrictedarray = array("id");
-
-      $form = CreateAddEditTable($tablename, $restrictedarray);
-      echo $form;
-    }
     if ($_POST['action'] == 'View'){
       $result = $user->ViewUser($_POST['db']);
     }
@@ -31,7 +24,6 @@
       $result = $user->AddUser();
     }
     if ($_POST['action'] == 'updaterecord'){
-
       $result = $user->UpdateUser($_POST);
     }
     if ($_POST['action'] == 'Delete'){

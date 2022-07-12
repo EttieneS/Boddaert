@@ -10,9 +10,20 @@
 
     function __construct() {}
 
+    function addNew($db, $id=""){
+      $body = GetAddEditForm($db, $id);
+      echo CreateAddEditModal($body);
+
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+    }
+
     function Add() {
       $name = $_POST['name'];
-      echo "<pre>" . $_POST . '</pre>';
+
       $sql = "INSERT INTO
         horses
         (name)
@@ -21,6 +32,17 @@
 
       $result = runSQL($sql);
       echo $result;
+    }
+
+    function Edit($db, $id) {
+      $body = GetAddEditForm($db,$id);
+
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
     }
 
     function ViewAll() {
@@ -53,11 +75,11 @@
       header('Location: index.php');
     }
 
-    function Delete($userdata) {
-      $id = $userdata['id'];
+    function Delete() {
+      $id = $_POST['id'];
 
       $sql = "DELETE FROM
-        users
+        horses
         WHERE
         (id = '$id')";
 
@@ -66,11 +88,10 @@
     }
 
     function GetAllHorses() {
-
       $sql = "SELECT * FROM horses";
       createTable($sql,"horses");
     }
-    
+
     function AddSelection(){
       $userid = 1; //Session variable
 
@@ -85,6 +106,29 @@
 
       $result = runSQL($sql);
       echo $result;
+    }
+
+    function View($db, $id=""){
+      $db = $_POST['db'];
+
+      $body = GetViewForm($db,$id);
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+    }
+
+    function getTools($db, $id){
+      echo "<form method=post style='float:right'>
+              <input type='submit' name='action' id='edit' value='Edit' class='btn btn-warning'>
+              <input type='submit' name='action' id='remove' value='Delete' class='btn btn-danger'>
+              <input type='submit' name='action' id='View' value='View' class='btn btn-info'>
+              <input type='checkbox' id='selected' name='selected[]' value='$id'>
+              <input type='hidden' name='db' id='db' value='$db'>
+              <input type='hidden' name='id' id='id' value='$id'>
+            </form>";
     }
   }
 ?>

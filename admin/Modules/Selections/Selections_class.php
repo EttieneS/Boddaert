@@ -17,6 +17,43 @@
       echo $table;
     }
 
+    function addNew($db, $id=""){
+      $body = GetAddEditForm($db,$id);
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+    }
+
+    function Edit($db, $id) {
+      $body = GetAddEditForm($db,$id);
+
+      echo CreateAddEditModal($body);
+      echo "<script>
+            $(document).ready(function(){
+              $('#AddEditModal').modal('show');
+            });
+            </script>";
+    }
+
+    function Update($data) {
+      $id = $data['id'];
+      $selection = $data['selection'];
+
+      print_r($_POST);
+      $sql = "UPDATE selections SET
+        selections = '$selection'
+        WHERE
+        id = '$id'";
+
+      echo $sql;
+
+      $result = runSQL($sql);
+      //echo header('Location: index.php');
+    }
+
     function getTools($db,$id){
       echo "<form method=post style='float:right'>
               <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>

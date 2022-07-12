@@ -1,55 +1,49 @@
+<script src='script/horses.js'></script>";
 <?php
   require_once("../../../config.php");
   require_once("Horse_class.php");
   require("../../Includes/header.php");
-  echo "<script src='../../Libraries/Horses/horses.js'></script>";
+
+  echo '<pre>'.print_r($_POST,true).'</pre>';
 
   $horse = new Horse();
 
   if (isset($_POST['action'])){
-
-  //   if ($_POST['action'] == 'selecthorses'){
-  //     $checked = $_POST['selected'];
-  //     $list = implode(',', $checked);
-  //     print_r($list);
-
-  //     $result = $horse->AddSelection($list);
-  //   }
-  //   if ($_POST['action'] == 'addtable'){
-  //     $table = $horse->CreateAddEditTable($_POST['db']);
-  //     echo $table;
-  //   }
-
-  //   if ($_POST['action'] == 'edittable'){
-  //     $db = $_POST['db'];
-
-  //     $table = $horse->CreateAddEditTable($_POST['db'], $_POST['id']);
-  //     echo $table;
-  //   }
-
-  //   if ($_POST['action'] == 'add'){
-  //     $result = $horse->Add();
-  //   } else if ($_POST['action'] == 'update'){
-  //     $result = $horse->Update();
-  //   }
-  } else {
-      $table = $horse->GetAllHorses();
-      echo $table;
-  }
-
-  echo '<pre>'.print_r($_POST,true).'</pre>';
-  echo "</body>";
-    if ($_POST['addNew'] =="Add"){
-      //CALL MODAL
-      //createModal();
+    if($_POST['action'] == "addNew"){
+      $horse->addNew($_POST['db']);
+    }
+    if ($_POST['action'] == 'addrecord'){
+      $result = $horse->Add();
+    }
+    if ($_POST['action'] == 'Edit'){
+      $horse->Edit($_POST['db'], $_POST['id']);
+    }
+    if ($_POST['action'] == 'updaterecord'){
+      $result = $horse->Update();
+    }
+    if ($_POST['action'] == 'Delete'){
+      $result = $horse->Delete($_POST);
+      $_POST = '';
+      echo header('Location: index.php');
+    }
+    if ($_POST['action'] == 'View'){
+      $result = $horse->View($_POST['db']);
+    }
+    if ($_POST['action'] == 'Select'){
+      $result = $horse->Select($_POST['selected']);
+      echo print_r($_POST);
     }
   } else {
-    $table = $horse->GetAllHorses();
+    $sql = "SELECT * FROM horses";
+    $tablename = 'horses';
+    $restrictedarray = "id";
+    $buttons = array();
+
+    $table = createTable($sql, $tablename, $restrictedarray, $buttons);
     echo $table;
   }
 
-  $addModal = AddEditModal();
-  echo $addModal;
+  CreateAddEditModal("");
 
   include("../../Includes/footer.php");
 ?>
