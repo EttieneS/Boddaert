@@ -54,7 +54,7 @@
             </form>";
   }
 
-  function createTable($sql, $tablename, $restrictedarray="", $buttons){
+  function createTable($sql, $tablename, $restrictedarray="", $buttons=""){
     $columns = getDBColumns($tablename, $restrictedarray);
 
     $data = runSQL($sql);
@@ -83,7 +83,7 @@
         echo "<td>{$row[$column['Field']]}</td>";
       }
 
-      if (isset($buttons)){
+      if ($buttons != ""){
         foreach($buttons as $button){
           $id = $row['id'];
           if ($button == 'select'){
@@ -103,15 +103,21 @@
             </tr>";
     }
 
-    echo "</table>
-          <button class='btn btn-primary' type='submit' id='saveSelection' name='action' value='saveselection'>Save Selection</button>
-          </form>";
+    echo "</table>";
+          if ($buttons  != ""){
+            foreach($buttons as $button){
+              if ($button == "saveselection"){
+                echo "<button class='btn btn-primary' type='submit' id='saveSelection' name='action' value='saveselection'>Save Selection</button>";
+              }
+            }
+          }
+    echo "</form>";
   }
 
   function getTools($db, $id){
     echo "<form method='post'>
             <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
-            <input type='submit' name='remove' id='remove' value='Remove' class='btn btn-danger'>
+            <input type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>
             <input type='submit' name='action' id='View' value='View' class='btn btn-info'>
             <input type='hidden' name='db' id='db' value='$db'>
             <input type='hidden' name='id' id='id' value='$id'>

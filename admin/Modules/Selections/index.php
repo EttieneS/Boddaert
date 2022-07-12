@@ -27,6 +27,11 @@
     if ($_POST['action'] == 'saveselection'){
       $result = $selection->SaveSelection();
     }
+    if ($_POST['action'] == 'deleterecord'){
+      $result = $selection->DeleteRecord();
+
+      echo header('Location: index.php');
+    }
     if ($_POST['action'] == 'View'){
       echo "view  selection";
 
