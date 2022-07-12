@@ -8,8 +8,11 @@
           $result = runSQL($sql);
           $row = $result->fetch_assoc();
 
-          if($_POST['password']===$row['password']){
-              echo "true";
+          $pepper = "x234";
+          $pwd_peppered = hash_hmac("sha256", $_POST['password'], $pepper);
+
+          if($pwd_peppered === $row['password']){
+              echo "true";              
           }else{
               echo "false";
           }

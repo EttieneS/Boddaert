@@ -7,7 +7,7 @@
   echo '<pre>'.print_r($_POST,true).'</pre>';
 
   $horse = new Horse();
-
+  
   if (isset($_POST['action'])){
     if($_POST['action'] == "addNew"){
       $horse->addNew($_POST['db']);

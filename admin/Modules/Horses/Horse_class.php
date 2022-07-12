@@ -1,6 +1,6 @@
+<script href='../../Horses/horse.js'></script>;
 <?php
   require_once("../../../config.php");
-  echo "<script href='../../Horses/horse.js'></script>";
   require("../Selections/Selections_class.php");
   require_once("../../Libraries/Elements/Elements.php");
 
@@ -118,17 +118,6 @@
               $('#AddEditModal').modal('show');
             });
             </script>";
-    }
-
-    function getTools($db, $id){
-      echo "<form method=post style='float:right'>
-              <input type='submit' name='action' id='edit' value='Edit' class='btn btn-warning'>
-              <input type='submit' name='action' id='remove' value='Delete' class='btn btn-danger'>
-              <input type='submit' name='action' id='View' value='View' class='btn btn-info'>
-              <input type='checkbox' id='selected' name='selected[]' value='$id'>
-              <input type='hidden' name='db' id='db' value='$db'>
-              <input type='hidden' name='id' id='id' value='$id'>
-            </form>";
     }
   }
 ?>

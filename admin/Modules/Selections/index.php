@@ -6,33 +6,36 @@
   require("../../Includes/header.php");
   require_once("../../Libraries/Elements/Elements.php");
 
-  echo "<pre>" . print_r($_POST) . "</pre>";
-  $selection= new Selections();
+  $selection = new Selections();
   $sessionvariable = 1;
 
   if (isset($_POST['action'])){
     if($_POST['action'] == "addNew"){
       $selection->addNew($_POST['db']);
     }
+    if ($_POST['action'] == 'addrecord'){
+      $result = $selection->Add($_POST);
+      echo $result;
+    }
     if ($_POST['action'] == 'Edit'){
       $selection->Edit($_POST['db'], $_POST['id']);
     }
     if ($_POST['action'] == 'updaterecord'){
-      echo "update record index";
-      print_r($_POST);
-      //$result = $selection->Update($_POST);
+      $result = $selection->Update($_POST);
+      echo $result;
+    }
+    if ($_POST['action'] == 'saveselection'){
+      $result = $selection->SaveSelection();
+    }
+    if ($_POST['action'] == 'View'){
+      echo "view  selection";
+
+      $result = $selection->View($_POST['db']);
     }
   } else {
-    $sql = "SELECT * FROM selections";
-    $tablename = 'selections';
-    $restrictedarray = "id";
-    $buttons = array();
-
-    $table = createTable($sql, $tablename, $restrictedarray, $buttons);
-    echo $table;
+    $selection->init();
   }
-
   CreateAddEditModal("");
-  echo "</body>";
-  echo "</html>";
+
+  include("../../Includes/footer.php");
 ?>
