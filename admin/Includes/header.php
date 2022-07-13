@@ -51,18 +51,14 @@
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
                           </li>";
                 }
+                echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
 
-                echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>
-                      <li style='float: right'>";
-                        echo "R" . $_SESSION['wallet'] . " in your wallet
-                      </li>";
+                if ($_SESSION['won'] > 0){
+                  "<li style='float: right'>";
+                    echo "You won R".  $_SESSION['won'] ." in this session
+                  </li>";
+                }
 
-                      if ($_SESSION['won'] > 0){
-                        "<li style='float: right'>";
-                          echo "You won R".  $_SESSION['won'] ." in this session
-                        </li>";
-                      }
-                echo "user id " . $_SESSION['userid'];
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>
