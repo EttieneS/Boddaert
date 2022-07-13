@@ -114,6 +114,13 @@
             <button type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>Delete</button>
             <button type='submit' name='action' id='View' value='viewmodal' class='btn btn-info'>View</button>
 =======
+    echo "<form method='post'>";
+    if (isset($_SESSION['role']) && $_SESSION['role'] == 1){
+      echo "<button type=
+      'submit' name='action' id='edit' value='editmodal' class='btn btn-warning'>Edit</button>
+      <button type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>Delete</button>";
+    }
+      echo  "<button type='submit' name='action' id='View' value='viewmodal' class='btn btn-info'>View</button>
 >>>>>>> Stashed changes
             <input type='hidden' name='db' id='db' value='$db'>
             <input type='hidden' name='id' id='id' value='$id'>
