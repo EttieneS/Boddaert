@@ -19,10 +19,7 @@
             session_start();
               $_SESSION["logged_in"] = true;
               $_SESSION['userid'] = $row['id'];
-<<<<<<< Updated upstream
               $_SESSION["wallet"] = 200;
-=======
->>>>>>> Stashed changes
               $_SESSION["log_in_time"] = date("h:i:sa");
 
               echo "true";

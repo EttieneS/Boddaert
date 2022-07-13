@@ -51,7 +51,11 @@
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
                           </li>";
                 }
-                echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
+                if (isset($_SESSION['role']) && $_SESSION['role'] == 0) {
+                  echo "<a class='nav-link active' aria-current='page' href='$link'>Users</a>
+                        <a class='nav-link active' aria-current='page' href='$link'>Horses</a>";
+                }
+                  echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
 
                 if ($_SESSION['won'] > 0){
                   "<li style='float: right'>";
