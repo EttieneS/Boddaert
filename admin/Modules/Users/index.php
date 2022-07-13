@@ -6,17 +6,16 @@
   require_once("../../Libraries/Elements/Elements.php");
   require_once("../../../config.php");
 
-  echo "<pre>" . print_r($_POST) . "</pre>";
   $user = new User();
 
   if (isset($_POST['action'])){
     if($_POST['action'] == "addNew"){
       $user->addNew($_POST['db']);
     }
-    if ($_POST['action'] == 'View'){
+    if ($_POST['action'] == 'viewmodal'){
       $result = $user->ViewUser($_POST['db']);
     }
-    if ($_POST['action'] == 'Edit'){
+    if ($_POST['action'] == 'editmodal'){
       $user->Edit($_POST['db'], $_POST['id']);
     }
     if ($_POST['action'] == 'addrecord'){
@@ -25,7 +24,7 @@
     if ($_POST['action'] == 'updaterecord'){
       $result = $user->UpdateUser($_POST);
     }
-    if ($_POST['action'] == 'Delete'){
+    if ($_POST['action'] == 'deleterecord'){
       $result = $user->DeleteUser($_POST);
     }
   } else {

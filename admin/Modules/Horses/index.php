@@ -3,7 +3,8 @@
   require_once("../../../config.php");
   require_once("Horse_class.php");
   require("../../Includes/header.php");
-  
+
+  echo "<pre>" . print_r($_POST) . "</pre>";
   $horse = new Horse();
 
   if (isset($_POST['action'])){
@@ -19,17 +20,15 @@
     if ($_POST['action'] == 'updaterecord'){
       $result = $horse->Update();
     }
-    if ($_POST['action'] == 'Delete'){
+    if ($_POST['action'] == 'deleterecord'){
       $result = $horse->Delete($_POST);
-      $_POST = '';
-      echo header('Location: index.php');
     }
-    if ($_POST['action'] == 'View'){
+    if ($_POST['action'] == 'viewmodal'){
       $result = $horse->View($_POST['db']);
     }
-    if ($_POST['action'] == 'Select'){
-      $result = $horse->Select($_POST['selected']);
-      echo print_r($_POST);
+    if ($_POST['action'] == 'saveselection'){      
+      $result = $horse->AddSelection();
+      echo $result;
     }
   } else {
     $horse->init();

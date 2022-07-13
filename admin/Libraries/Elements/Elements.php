@@ -31,14 +31,6 @@
     return "<button type='button' class='btn btn-primary' id='" . $functionname  ."' name='". $functionname ."' onclick='" . $functionname . "(" . $id .")" ."'>" . $text . "</button>";
   }
 
-  function EditFormButton($id, $tablename) {
-    return "<form method='post'>
-      <button class='btn btn-primary' type='submit' name='action' value='edittable'>Edit</button>
-      <input type='hidden' value='$id' id='id' name='id'>
-      <input type='hidden' name='db' id='db' value='$tablename'>
-    </form>";
-  }
-
   function SelectFormInput($id, $text, $arrayname){
     return "<input type='checkbox' name='". $arrayname . "[]' value='" . $id . "'>" . $text ;
   }
@@ -63,10 +55,12 @@
     echo "<form method=post style='float:right'>
             <button type='submit' class='btn btn-success' id='addBtn' name='action' value='addNew'>Add</button>
             <input type='hidden' id='db' name='db' value='$tablename'>
-          </form>
-          <form method='post'>
-           <table class='table table-striped'>
-           <thead>";
+          </form>";
+          if ($buttons != ""){
+            echo "<form method='post'>";
+          }
+          echo "<table class='table table-striped'>
+                    <thead>";
 
     foreach($columns as $column){
       echo "<th>{$column['Field']}</th>";
@@ -75,7 +69,6 @@
     echo "</thead>";
 
     $result = runSQL($sql);
-
 
     while($row = $result->fetch_assoc()){
       echo "<tr>";
@@ -98,27 +91,27 @@
       echo "<td>";
       getTools($tablename, $row['id']);
 
-      echo "
-            </td>
+      echo "  </td>
             </tr>";
     }
 
-    echo "</table>";
-          if ($buttons  != ""){
-            foreach($buttons as $button){
-              if ($button == "saveselection"){
-                echo "<button class='btn btn-primary' type='submit' id='saveSelection' name='action' value='saveselection'>Save Selection</button>";
-              }
+    echo "  </table>";
+          foreach($buttons as $button){
+            if ($button == "saveselection"){
+              $userid = $_SESSION['userid'];
+
+              echo "  <button class='btn btn-primary' type='submit' id='submitBtn' name='action' value='saveselection'>Save Selection</button>
+                      <input type='hidden' type='text' id='id' name='id' value='$userid' >
+                    </form>";
             }
           }
-    echo "</form>";
   }
 
   function getTools($db, $id){
     echo "<form method='post'>
-            <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
-            <input type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>
-            <input type='submit' name='action' id='View' value='View' class='btn btn-info'>
+            <button type='submit' name='action' id='edit' value='editmodal' class='btn btn-warning'>Edit</button>
+            <button type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>Delete</button>
+            <button type='submit' name='action' id='View' value='viewmodal' class='btn btn-info'>View</button>
             <input type='hidden' name='db' id='db' value='$db'>
             <input type='hidden' name='id' id='id' value='$id'>
           </form>";
@@ -127,11 +120,13 @@
   function createJoinTable($sql, $db, $headings, $buttons){
     $data = runSQL($sql);
 
-    echo "<table class='table table-striped'>
-            <thead>";
+    echo "<form method='post'>
+            <table class='table table-striped'>
+              <thead>";
     foreach($headings as $heading){
       echo "<th>{$heading}</th>";
     }
+    echo "<th>Tools</th>";
     echo "<thead>";
 
     while($columns = $data->fetch_assoc()){
@@ -140,24 +135,11 @@
         echo "<td>{$columns[$heading]}</td>";
       }
 
-      if (isset($buttons)){
-        foreach($buttons as $button){
-          $id = $columns['id'];
-          if ($button == 'select'){
-            echo "<td>" .
-              Label("Select") .
-                "<input type='checkbox' id='selected' name='selected[]' value='$id' >
-                </td>";
-          }
-        }
-      }
-
-      echo "<td>";
+      echo "  <td>";
       getTools($db, $columns['id']);
       echo "  </td>
             </tr>";
     }
-    echo "</table>";
   }
 
   function CreateAddEditModal($body){
@@ -184,13 +166,14 @@
   }
 
   function GetAddEditForm($db,$id=''){
+    $id = $_POST['id'];
     $sql = "";
     $column = "";
     $action = $_POST['action'];
 
     $body = "<form method='post'>";
 
-    if ($action == 'Edit'){
+    if ($action == 'editmodal'){
       $id = $_POST['id'];
       $sql = "SELECT * FROM " . $db . " WHERE id = " . $id;
       $body .= "<input type='hidden' id='id' name='id' value='$id' >";
@@ -207,7 +190,7 @@
       $body .= Label($name) . '</br>';
       if ($action == 'addNew') {
           $body .= "<input id='$name' name='$name' ></br>";
-      } else if($action == 'Edit') {
+      } else if($action == 'editmodal') {
         $body .= "<input id='$name' name='$name' value='$column[$name]'></br>";
       }
     }
@@ -234,6 +217,9 @@
     $sql = "SELECT * FROM $db WHERE id = $id";
     $columns = runSQL($sql);
     $column = $columns->fetch_assoc();
+
+    print_r($column);
+
 
     foreach($headings as $heading){
       $name = $heading['Field'];

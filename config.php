@@ -12,7 +12,6 @@ function getPass(){ return "";}
 function getHost(){ return "localhost";}
 function getDB(){ return "labmin_tests";}
 
-session_start();
-
 include_once(BASE_DIR."./admin/libraries/Connections/conn.php");
+include_once("admin/includes/session_handler.php");
 ?>

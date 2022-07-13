@@ -11,8 +11,6 @@
     function __construct() {}
 
     function init() {
-      session_start()
-
       if(!isset($_SESSION['logged_in'])){
         header("Location: http://localhost/Boddaert/login.php");
       }
@@ -20,7 +18,7 @@
       $sql = "SELECT * FROM horses";
       $tablename = 'horses';
       $restrictedarray = "id";
-      $buttons = array();
+      $buttons = array("select", "saveselection");
 
       $table = createTable($sql, $tablename, $restrictedarray, $buttons);
       echo $table;
@@ -39,12 +37,13 @@
 
     function Add() {
       $name = $_POST['name'];
+      $number = $_POST['number'];
 
       $sql = "INSERT INTO
         horses
-        (name)
+        (name, number)
         VALUES
-        ('$name')";
+        ('$name', '$number')";
 
       $result = runSQL($sql);
       echo $result;
@@ -109,7 +108,7 @@
     }
 
     function AddSelection(){
-      $userid = 1; //Session variable
+      $userid = $_SESSION['userid'];
 
       $checked = $_POST['selected'];
       $selections = implode(',', $checked);
@@ -126,6 +125,7 @@
 
     function View($db, $id=""){
       $db = $_POST['db'];
+      $id = $_POST['id'];
 
       $body = GetViewForm($db,$id);
       echo CreateAddEditModal($body);

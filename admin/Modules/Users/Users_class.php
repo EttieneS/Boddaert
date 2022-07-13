@@ -10,12 +10,6 @@
     function __construct() {}
 
     function init(){
-      session_start()
-
-      if(!isset($_SESSION['logged_in'])){
-        header("Location: http://localhost/Boddaert/login.php");
-      }
-
       $sql = "SELECT * FROM users";
       $tablename = 'users';
       $restrictedarray = array("id");
@@ -198,8 +192,7 @@
         WHERE
         id = '$id'";
 
-      $result = runSQL($sql);
-      echo header('Location: index.php');
+      $result = runSQL($sql);      
     }
 
     function DeleteUser() {

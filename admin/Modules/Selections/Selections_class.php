@@ -4,7 +4,6 @@
   require_once("../../../config.php");
   require_once("../../Libraries/Elements/Elements.php");
 
-  echo "<pre>" . print_r($_POST) . "</pre>";
   class Selections {
     var $userid = "";
     var $selections = array();
@@ -12,13 +11,11 @@
     function __construct() {}
 
     function init() {
-
-      if(!isset($_SESSION['logged_in'])){
-        header("Location: http://localhost/Boddaert/login.php");
-      }
       //CONCAT(u.username," ", u.surname)
       $sql = "SELECT s.id, u.username as 'User Name', s.selection as 'Selection' FROM selections s
           LEFT JOIN users u ON u.id = s.userid";
+
+      $userid = $_SESSION['userid'];
 
       $races = "SELECT * FROM races WHERE id = 1";
 
@@ -64,7 +61,8 @@
         VALUES ('$selection')";
 
       $result = runSQL($sql);
-      echo $result;
+      //echo $result;
+      $header = "index.php";
     }
 
     function Edit($db, $id) {
@@ -109,8 +107,10 @@
 
     function View($db, $id=""){
       $db = $_POST['db'];
+      $id = $_POST['id'];
+      $raceid = 1;//$_POST['raceid'];
 
-      $races = "SELECT * FROM races WHERE id = 1";
+      $races = "SELECT * FROM races WHERE id = " . $raceid;
 
       $body = $this->GetViewDetailsForm($db, $id, $races);
       echo $body;
@@ -123,11 +123,8 @@
     }
 
     function GetViewDetailsForm($db, $id, $getpositions){
-      //$db = $_POST['db'];
-      //$id = $_POST['id'];
       $db = "horses";
-      $id = 1;
-
+      
       $restrictedarray = "";
       $headings = getDBColumns($db, $restrictedarray);
 

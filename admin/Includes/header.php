@@ -24,7 +24,9 @@
 <body>
     <?php
         require_once("../../../config.php");
+        require_once("session_handler.php");
     ?>
+
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Labmin Pick 6</a>
@@ -33,7 +35,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <?php                
+            <?php
                 $url = "http://localhost/Boddaert/admin/Modules/";
                 $sql = "SELECT * FROM modules WHERE is_active='Yes'";
                 $result = runSQL($sql);
@@ -43,19 +45,18 @@
                     $link = $url . $row['name']."/index.php";
                     echo "<li class='nav-item'>
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
-                        </li>";
+                          </li>";
                 }
-                echo "<li>
-                        <a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()'>Logout</button></a>
-                      </li>
-                      <li>";
+                echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>
+                      <li style='float: right'>";
                         echo "R" . $_SESSION['wallet'] . " in your wallet
-                      </li>
-                      <li>";
-                        if ($_SESSION['won'] > 0){
-                          echo "You won R".  $_SESSION['won'] ." in this session";
-                        }
-                      echo "</li>";
+                      </li>";
+
+                      if ($_SESSION['won'] > 0){
+                        "<li style='float: right'>";
+                          echo "You won R".  $_SESSION['won'] ." in this session
+                        </li>";
+                      }
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>
