@@ -7,12 +7,12 @@ function checkUserDetails(){
         method: 'post',
         data: {action: 'checkUserDetails',username: username,password:password},
         success: function(response){
-            console.log(response);
-            window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
-            
+            // console.log(response);
+            // window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
             if(response == "true"){
-                console.log("logged in baby");
-                window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
+              window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
+            } else {
+              alert("User name or password invalid");
             }
         }
     });
@@ -23,10 +23,8 @@ function LogOut() {
     url: "http://localhost/Boddaert/admin/Modules/Users/Ajax/getUsersAjax.php",
     method: 'post',
     data: {action: 'logout'},
-    success: function(response){
-        //if(response == "success"){
-            window.location.href = "http://localhost/Boddaert/login.php";
-        //}
+    success: function(){
+      window.location.href = "http://localhost/Boddaert/login.php";
     }
   });
 }

@@ -24,7 +24,10 @@
 <body>
     <?php
         require_once("../../../config.php");
+        require_once("session_handler.php");
+        require_once("../../Modules/Wallets/Wallet_class.php");
     ?>
+
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Labmin Pick 6</a>
@@ -38,26 +41,28 @@
                 $sql = "SELECT * FROM modules WHERE is_active='Yes'";
                 $result = runSQL($sql);
 
+                $wallet = new Wallet();
+                $_SESSION['wallet'] = $wallet->GetBalance();
+
                 while($row = $result->fetch_assoc()){
                     $modulename = ucfirst($row['name']);
                     $link = $url . $row['name']."/index.php";
                     echo "<li class='nav-item'>
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
-                        </li>";
+                          </li>";
                 }
-                echo "<li>
-                        <a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()'>Logout</button></a>
-                      </li>
-                      <li>";
-                        echo "R" . $_SESSION['wallet'] . " in your wallet
-                      </li>";
-                      if (isset($_SESSION['won'])){
-                        echo "<li>";
-                        if ($_SESSION['won'] > 0){
-                          echo "You won R".  $_SESSION['won'] ." in this session";
-                        }
-                        echo "</li>";
-                      }
+                if (isset($_SESSION['role']) && $_SESSION['role'] == 0) {
+                  echo "<a class='nav-link active' aria-current='page' href='$link'>Users</a>
+                        <a class='nav-link active' aria-current='page' href='$link'>Horses</a>";
+                }
+                  echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
+
+                if ($_SESSION['won'] > 0){
+                  "<li style='float: right'>";
+                    echo "You won R".  $_SESSION['won'] ." in this session
+                  </li>";
+                }
+
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>

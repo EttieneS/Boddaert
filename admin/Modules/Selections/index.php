@@ -6,6 +6,8 @@
   require("../../Includes/header.php");
   require_once("../../Libraries/Elements/Elements.php");
 
+  echo "<pre>" . print_r($_POST) . "</pre>";
+
   $selection = new Selections();
   
   if (isset($_POST['action'])){
@@ -31,9 +33,7 @@
 
       echo header('Location: index.php');
     }
-    if ($_POST['action'] == 'View'){
-      echo "view  selection";
-
+    if ($_POST['action'] == 'viewmodal'){      
       $result = $selection->View($_POST['db']);
     }
   } else {

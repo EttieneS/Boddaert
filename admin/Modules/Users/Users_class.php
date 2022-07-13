@@ -1,21 +1,15 @@
+<script href='script/users.js'></script>"
 <?php
   require_once("../../../config.php");
-  echo "<script href='script/users.js'></script>";
   require_once("../../Libraries/Elements/Elements.php");
 
   class User {
     var $username="";
     var $password="";
 
-    function __construct() {}
+    function __construct(){}
 
     function init(){
-      session_start();
-
-      if(!isset($_SESSION['logged_in'])){
-        header("Location: http://localhost/Boddaert/login.php");
-      }
-
       $sql = "SELECT * FROM users";
       $tablename = 'users';
       $restrictedarray = array("id");
@@ -204,7 +198,6 @@
         id = '$id'";
 
       $result = runSQL($sql);
-      echo header('Location: index.php');
     }
 
     function DeleteUser() {
