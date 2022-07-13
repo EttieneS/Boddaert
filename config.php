@@ -13,5 +13,5 @@ function getHost(){ return "localhost";}
 function getDB(){ return "labmin_tests";}
 
 include_once(BASE_DIR. "./admin/libraries/Connections/conn.php");
-include_once(BASE_DIR. "./admin/includes/session_handler.php");
+//include_once(BASE_DIR. "./admin/includes/session_handler.php");
 ?>
