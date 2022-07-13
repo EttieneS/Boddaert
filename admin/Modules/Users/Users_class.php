@@ -208,5 +208,23 @@
       $_POST = '';
       echo header('Location: index.php');
     }
+
+    function CheckUser(){
+      if($_POST['password'] != "" && $_POST['username'] !=""){
+          $sql = "SELECT * FROM users WHERE username = '{$_POST['username']}'";
+
+          $result = runSQL($sql);
+          $row = $result->fetch_assoc();
+
+          $salt = "x234";
+          $pwd_salted = hash_hmac("sha256", $_POST['password'], $salt);
+
+          if($pwd_salted === $row['password']){
+            return true;
+          } else {
+            return false;
+          }
+      }
+    }
 }
 ?>

@@ -1,5 +1,6 @@
 <?php
   require_once("../../../config.php");
+  require_once("../../Includes/session_handler.php");
 
   function Label($text){
     $text = ucfirst($text);
@@ -99,19 +100,22 @@
           foreach($buttons as $button){
             if ($button == "saveselection"){
               $userid = $_SESSION['userid'];
+              $role = $_SESSION['role'];
 
               echo "  <button class='btn btn-primary' type='submit' id='submitBtn' name='action' value='saveselection'>Save Selection</button>
-                      <input type='hidden' type='text' id='id' name='id' value='$userid' >
+                      <input type='hidden' type='text' id='id' name='id' value='$role' >
                     </form>";
             }
           }
   }
 
   function getTools($db, $id){
-    echo "<form method='post'>
-            <button type='submit' name='action' id='edit' value='editmodal' class='btn btn-warning'>Edit</button>
-            <button type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>Delete</button>
-            <button type='submit' name='action' id='View' value='viewmodal' class='btn btn-info'>View</button>
+    echo "<form method='post'>";
+    if ($role == 1){
+      echo "<button type='submit' name='action' id='edit' value='editmodal' class='btn btn-warning'>Edit</button>
+      <button type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>Delete</button>";
+    }
+      echo  "<button type='submit' name='action' id='View' value='viewmodal' class='btn btn-info'>View</button>
             <input type='hidden' name='db' id='db' value='$db'>
             <input type='hidden' name='id' id='id' value='$id'>
           </form>";

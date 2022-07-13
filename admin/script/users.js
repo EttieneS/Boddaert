@@ -7,13 +7,13 @@ function checkUserDetails(){
         method: 'post',
         data: {action: 'checkUserDetails',username: username,password:password},
         success: function(response){
-            // console.log(response);
-            // window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
-            if(response == "true"){
-              window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
-            } else {
-              alert("User name or password invalid");
-            }
+            console.log(response);
+            window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
+            // if(response == "true"){
+            //   window.location.href = "http://localhost/Boddaert/admin/Modules/Selections/index.php";
+            // } else {
+            //   alert("User name or password invalid");
+            // }
         }
     });
 }
