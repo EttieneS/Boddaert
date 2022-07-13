@@ -1,6 +1,7 @@
 <?php
   require_once("../../../../config.php");
   require_once("../../../includes/session_handler.php");
+  require_once("../../Wallets/Wallet_class.php");
 
   if($_POST['action']=="checkUserDetails"){
       if($_POST['password'] != "" && $_POST['username'] !=""){
@@ -12,12 +13,14 @@
           $salt = "x234";
           $pwd_salted = hash_hmac("sha256", $_POST['password'], $salt);
 
+          $wallet = new Wallet();
+
           if($pwd_salted === $row['password']){
               $_SESSION["logged_in"] = true;
-              $_SESSION["wallet"] = 200;
-              $_SESSION["log_in_time"] = date("h:i:sa");
               $_SESSION['userid'] = $row['id'];
-              
+              $_SESSION["wallet"] = $wallet->GetBalance();
+              $_SESSION["log_in_time"] = date("h:i:sa");
+
               echo "true";
           } else {
               echo "false";

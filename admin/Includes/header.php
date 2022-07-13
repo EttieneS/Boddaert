@@ -25,6 +25,7 @@
     <?php
         require_once("../../../config.php");
         require_once("session_handler.php");
+        require_once("../../Modules/Wallets/Wallet_class.php");
     ?>
 
     <nav class="navbar navbar-expand-lg bg-light">
@@ -40,6 +41,9 @@
                 $sql = "SELECT * FROM modules WHERE is_active='Yes'";
                 $result = runSQL($sql);
 
+                $wallet = new Wallet();
+                $_SESSION['wallet'] = $wallet->GetBalance();
+
                 while($row = $result->fetch_assoc()){
                     $modulename = ucfirst($row['name']);
                     $link = $url . $row['name']."/index.php";
@@ -47,6 +51,7 @@
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
                           </li>";
                 }
+
                 echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>
                       <li style='float: right'>";
                         echo "R" . $_SESSION['wallet'] . " in your wallet
@@ -57,6 +62,7 @@
                           echo "You won R".  $_SESSION['won'] ." in this session
                         </li>";
                       }
+                echo "user id " . $_SESSION['userid'];
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>

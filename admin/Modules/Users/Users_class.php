@@ -1,13 +1,13 @@
+<script href='script/users.js'></script>"
 <?php
   require_once("../../../config.php");
-  echo "<script href='script/users.js'></script>";
   require_once("../../Libraries/Elements/Elements.php");
 
   class User {
     var $username="";
     var $password="";
 
-    function __construct() {}
+    function __construct(){}
 
     function init(){
       $sql = "SELECT * FROM users";
@@ -192,7 +192,7 @@
         WHERE
         id = '$id'";
 
-      $result = runSQL($sql);      
+      $result = runSQL($sql);
     }
 
     function DeleteUser() {
