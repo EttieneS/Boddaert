@@ -69,6 +69,7 @@ INSERT INTO `modules` (`id`, `name`, `is_active`) VALUES
 -- Table structure for table `selections`
 --
 
+DROP TABLE IF EXISTS `selections`;
 CREATE TABLE `selections` (
   `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
@@ -80,10 +81,7 @@ CREATE TABLE `selections` (
 --
 
 INSERT INTO `selections` (`id`, `userid`, `selection`) VALUES
-(1, 1, '1,2,3'),
-(2, 1, '1'),
-(3, 1, '1'),
-(4, 1, '1');
+(14, 20, '2,3,4');
 
 -- --------------------------------------------------------
 
