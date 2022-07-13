@@ -8,10 +8,10 @@
           $result = runSQL($sql);
           $row = $result->fetch_assoc();
 
-          $pepper = "x234";
-          $pwd_peppered = hash_hmac("sha256", $_POST['password'], $pepper);
+          $salt = "x234";
+          $pwd_salted = hash_hmac("sha256", $_POST['password'], $salt);
 
-          if($pwd_peppered === $row['password']){
+          if($pwd_salted === $row['password']){
               session_start();
               $_SESSION["logged_in"] = true;
               $_SESSION["wallet"] = 200;

@@ -3,8 +3,7 @@
 <?php
   require_once("../../../config.php");
   require_once("../../Libraries/Elements/Elements.php");
-
-  echo "<pre>" . print_r($_POST) . "</pre>";
+  
   class Selections {
     var $userid = "";
     var $selections = array();
@@ -12,10 +11,9 @@
     function __construct() {}
 
     function init() {
-
-      if(!isset($_SESSION['logged_in'])){
-        header("Location: http://localhost/Boddaert/login.php");
-      }
+      // if(!isset($_SESSION['logged_in'])){
+      //   header("Location: http://localhost/Boddaert/login.php");
+      // }
       //CONCAT(u.username," ", u.surname)
       $sql = "SELECT s.id, u.username as 'User Name', s.selection as 'Selection' FROM selections s
           LEFT JOIN users u ON u.id = s.userid";

@@ -10,7 +10,7 @@
     function __construct() {}
 
     function init(){
-      session_start()
+      session_start();
 
       if(!isset($_SESSION['logged_in'])){
         header("Location: http://localhost/Boddaert/login.php");
@@ -192,9 +192,14 @@
     function UpdateUser($user) {
       $id = $user['id'];
       $username = $user['username'];
+      $password = $user['password'];
+
+      $salt = "x234";
+      $pwd_salted = hash_hmac("sha256", $password, $salt);
 
       $sql = "UPDATE users SET
-        username = '$username'
+        username = '$username',
+        password = '$pwd_salted'
         WHERE
         id = '$id'";
 

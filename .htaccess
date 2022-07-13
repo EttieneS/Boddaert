@@ -1,11 +1,2 @@
-#RewriteEngine On
-#RewriteBase /labmin
-#Options +FollowSymLinks
-#php_value include_path c:/....
-
-#RewriteRule ^/([^/]+\.(?:pdf|doc))$ filecheck.php
-
-#R
-
-#Redirect index.php
 DirectoryIndex index.php
+IndexIgnore *

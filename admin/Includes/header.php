@@ -33,7 +33,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <?php                
+            <?php
                 $url = "http://localhost/Boddaert/admin/Modules/";
                 $sql = "SELECT * FROM modules WHERE is_active='Yes'";
                 $result = runSQL($sql);
@@ -50,12 +50,14 @@
                       </li>
                       <li>";
                         echo "R" . $_SESSION['wallet'] . " in your wallet
-                      </li>
-                      <li>";
+                      </li>";
+                      if (isset($_SESSION['won'])){
+                        echo "<li>";
                         if ($_SESSION['won'] > 0){
                           echo "You won R".  $_SESSION['won'] ." in this session";
                         }
-                      echo "</li>";
+                        echo "</li>";
+                      }
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>

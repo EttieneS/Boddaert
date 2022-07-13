@@ -7,8 +7,7 @@
   require_once("../../Libraries/Elements/Elements.php");
 
   $selection = new Selections();
-  $sessionvariable = 1;
-
+  
   if (isset($_POST['action'])){
     if($_POST['action'] == "addNew"){
       $selection->addNew($_POST['db']);

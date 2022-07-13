@@ -116,8 +116,8 @@
 
   function getTools($db, $id){
     echo "<form method='post'>
-            <input type='submit' name='edit' id='edit' value='Edit' class='btn btn-warning'>
-            <input type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>
+            <input type='submit' name='action' id='EditModal' value='Edit' class='btn btn-warning'>
+            <input type='submit' name='action' id='DeleteModal' value='Delete' class='btn btn-danger'>
             <input type='submit' name='action' id='View' value='View' class='btn btn-info'>
             <input type='hidden' name='db' id='db' value='$db'>
             <input type='hidden' name='id' id='id' value='$id'>

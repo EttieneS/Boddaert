@@ -6,7 +6,6 @@
   require_once("../../Libraries/Elements/Elements.php");
   require_once("../../../config.php");
 
-  echo "<pre>" . print_r($_POST) . "</pre>";
   $user = new User();
 
   if (isset($_POST['action'])){
