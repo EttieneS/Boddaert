@@ -85,7 +85,12 @@
     }
 
     function addNew($db, $id=""){
-      $body = GetAddEditForm($db,$id);
+      $id = "";
+      $restrictedstring = "id, access_rights";
+
+      $button = $this->Dropdown();
+
+      $body = GetAddEditForm($db, $id, $restrictedstring, $button);
       echo CreateAddEditModal($body);
       echo "<script>
             $(document).ready(function(){
@@ -95,8 +100,10 @@
     }
 
     function Edit($db, $id) {
-      $body = GetAddEditForm($db,$id);
+      $restrictedstring = "id, access_rights";
 
+      $button = $this->Dropdown();
+      $body = GetAddEditForm($db, $id, $restrictedstring, $button);
       echo CreateAddEditModal($body);
       echo "<script>
             $(document).ready(function(){
@@ -139,7 +146,7 @@
       return $body;
     }
 
-    function Validate($username,$password){
+    function Validate($username, $password){
 
       $sql= "SELECT * FROM users
              WHERE username = '$username'";
@@ -167,6 +174,7 @@
     function AddUser() {
       $username = $_POST['username'];
       $password = $_POST['password'];
+      $access_rights = $_POST['access_rights'];
 
       $salt = "x234";
 
@@ -174,9 +182,9 @@
 
       $sql = "INSERT INTO
         users
-        (username, password)
+        (username, password, access_rights)
         VALUES
-        ('$username', '$pwd_salted')";
+        ('$username', '$pwd_salted', '$access_rights')";
 
       $result = runSQL($sql);
       $_POST['action']= '';
@@ -187,13 +195,15 @@
       $id = $user['id'];
       $username = $user['username'];
       $password = $user['password'];
+      $access_rights = $_POST['access_rights'];
 
       $salt = "x234";
       $pwd_salted = hash_hmac("sha256", $password, $salt);
 
       $sql = "UPDATE users SET
         username = '$username',
-        password = '$pwd_salted'
+        password = '$pwd_salted',
+        access_rights = '$access_rights'
         WHERE
         id = '$id'";
 
@@ -212,6 +222,25 @@
       $result = runSQL($sql);
       $_POST = '';
       echo header('Location: index.php');
+    }
+
+    function DropDown(){
+      $dropdown = "<label>Roles:</label></br><select name='access_rights'>";
+      $options = $this->GetRolesOption();
+      foreach($options as $option){
+        $dropdown .= $option;
+      }
+      $dropdown .= "</select>";
+
+      return $dropdown;
+    }
+    function GetRolesOption() {
+      $sql = "";
+
+      $options = array("<option id='access_rights' name='access_rights' value='Master'>Master</option>",
+                  "<option id='access_rights' name='access_rights' value='Staff'>Staff</option>");
+
+      return $options;
     }
 }
 ?>

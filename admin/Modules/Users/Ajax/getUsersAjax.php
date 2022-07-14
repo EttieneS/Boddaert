@@ -16,12 +16,14 @@
           $wallet = new Wallet();
 
           if($pwd_salted === $row['password']){
-            session_start();
+            if(session_status() == PHP_SESSION_NONE){
+              session_start();
+            }
               $_SESSION["logged_in"] = true;
               $_SESSION['userid'] = $row['id'];
               $_SESSION["wallet"] = 200;
               $_SESSION["log_in_time"] = date("h:i:sa");
-
+              $_SESSION["role"] = $row['access_rights'];
               echo "true";
           } else {
               echo "false";
