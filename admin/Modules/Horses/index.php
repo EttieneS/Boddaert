@@ -1,5 +1,4 @@
 <script src='script/horses.js'></script>";
-<script src='script/chart.js'></script>";
 <?php
   require_once("../../../config.php");
   require_once("Horse_class.php");

@@ -14,10 +14,13 @@
     <script src="../../Libraries/jQuery/jQuery.js"></script>
     <!-- END -->
 
+    <!-- fontawesome-free-6.1.1-web -->
+    <link href="../../Libraries/FontAwesome/css/all.min.css" rel="stylesheet">
+
     <!-- Chart.js v2.8.0 -->
     <script src="../../Libraries/Charts/chart.min.js"></script>
     <!-- END -->
-    
+
     <!--Custom JS -->
     <script src="../../Libraries/Elements/script/js.js"></script>
     <script src="../../script/users.js"></script>
@@ -57,10 +60,9 @@
                           </li>";
                 }
                 if (isset($_SESSION['role']) && $_SESSION['role'] == "Master") {
-                  echo "<a class='nav-link active' aria-current='page' href='http://localhost/Boddaert/admin/modules/users/index.php'>Users</a>
-                        <a class='nav-link active' aria-current='page' href='http://localhost/Boddaert/admin/modules/horses/index.php'>Horses</a>";
+                  echo "<a class='nav-link active' aria-current='page' href='http://localhost/Boddaert/admin/modules/users/index.php'>Users</a>";
+                  echo "<a class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'><i class='fa-solid fa-sign-out'> Logout</i></a>";
                 }
-                  echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
 
                 if ((isset($SESSION['won'])) && $SESSION['won'] > 0){
                   "<li style='float: right'>";

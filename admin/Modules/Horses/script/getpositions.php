@@ -1,7 +1,6 @@
 <?php
   require_once("../../../../config.php");
 
-
   if($_POST['action'] == "getpositions"){
     $sql = "SELECT * FROM positions";
     $data = runSQL($sql);

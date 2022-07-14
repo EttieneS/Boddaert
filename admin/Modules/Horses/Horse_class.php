@@ -1,7 +1,7 @@
 <script href='../../Horses/horse.js'></script>;
 <script href='../../Horses/script/chart.js'></script>;
 <?php
-  require_once("../../../config.php");  
+  require_once("../../../config.php");
   require_once("../../Libraries/Elements/Elements.php");
 
   class Horse {
@@ -139,11 +139,12 @@
       $id = $_POST['id'];
 
       echo "<div id='chart-container'>
-              <canvas id='mycanvas' width='300' height='300'></canvas>
+              <canvas id='mycanvas' width='600' height='600'></canvas>
             </div>
             <script>
               $(document).ready(function(){
                 GetPositions(" . $id . ");
+                var ctx = document.getElementById('mycanvas').getContext('2d');
               });
             </script>";
     }
