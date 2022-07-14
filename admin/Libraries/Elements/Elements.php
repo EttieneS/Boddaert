@@ -115,6 +115,7 @@
       <button type='submit' name='action' id='deleteRecord' value='deleterecord' class='btn btn-danger'>Delete</button>";
     }
       echo  "<button type='submit' name='action' id='View' value='viewmodal' class='btn btn-info'>View</button>
+            <button type='submit' name='action' id='displaychart' value='displaychart' class='btn btn-info'>View Performance</button>
             <input type='hidden' name='db' id='db' value='$db'>
             <input type='hidden' name='id' id='id' value='$id'>
           </form>";

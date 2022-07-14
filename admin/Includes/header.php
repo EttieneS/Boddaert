@@ -14,6 +14,10 @@
     <script src="../../Libraries/jQuery/jQuery.js"></script>
     <!-- END -->
 
+    <!-- Chart.js v2.8.0 -->
+    <script src="../../Libraries/Charts/chart.min.js"></script>
+    <!-- END -->
+    
     <!--Custom JS -->
     <script src="../../Libraries/Elements/script/js.js"></script>
     <script src="../../script/users.js"></script>

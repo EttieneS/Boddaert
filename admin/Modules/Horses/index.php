@@ -1,4 +1,5 @@
 <script src='script/horses.js'></script>";
+<script src='script/chart.js'></script>";
 <?php
   require_once("../../../config.php");
   require_once("Horse_class.php");
@@ -26,8 +27,12 @@
     if ($_POST['action'] == 'viewmodal'){
       $result = $horse->View($_POST['db']);
     }
-    if ($_POST['action'] == 'saveselection'){      
+    if ($_POST['action'] == 'saveselection'){
       $result = $horse->AddSelection();
+      echo $result;
+    }
+    if ($_POST['action'] == 'displaychart'){
+      $result = $horse->DisplayChart();
       echo $result;
     }
   } else {
