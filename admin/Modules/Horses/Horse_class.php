@@ -1,7 +1,7 @@
 <script href='../../Horses/horse.js'></script>;
+<script href='../../Horses/script/chart.js'></script>;
 <?php
   require_once("../../../config.php");
-  require("../Selections/Selections_class.php");
   require_once("../../Libraries/Elements/Elements.php");
 
   class Horse {
@@ -67,8 +67,7 @@
 
       $horses = runSQL($sql);
 
-      while($row = $horses->fetch_assoc())
-      {
+      while($row = $horses->fetch_assoc()){
         $rows[] = $row;
       }
 
@@ -134,6 +133,20 @@
             $(document).ready(function(){
               $('#AddEditModal').modal('show');
             });
+            </script>";
+    }
+
+    function DisplayChart() {
+      $id = $_POST['id'];
+
+      echo "<div id='chart-container'>
+              <canvas id='mycanvas' width='600' height='600'></canvas>
+            </div>
+            <script>
+              $(document).ready(function(){
+                GetPositions(" . $id . ");
+                var ctx = document.getElementById('mycanvas').getContext('2d');
+              });
             </script>";
     }
   }

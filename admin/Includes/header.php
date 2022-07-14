@@ -14,6 +14,13 @@
     <script src="../../Libraries/jQuery/jQuery.js"></script>
     <!-- END -->
 
+    <!-- fontawesome-free-6.1.1-web -->
+    <link href="../../Libraries/FontAwesome/css/all.min.css" rel="stylesheet">
+
+    <!-- Chart.js v2.8.0 -->
+    <script src="../../Libraries/Charts/chart.min.js"></script>
+    <!-- END -->
+
     <!--Custom JS -->
     <script src="../../Libraries/Elements/script/js.js"></script>
     <script src="../../script/users.js"></script>
@@ -36,7 +43,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <?php
-                if (session_status() != PHP_SESSION_ACTIVE){
+                if (session_status() == PHP_SESSION_NONE){
                   session_start();
                 }
 
@@ -51,13 +58,12 @@
                             <a class='nav-link active' aria-current='page' href='$link'>{$modulename}</a>
                           </li>";
                 }
-                if (isset($_SESSION['role']) && $_SESSION['role'] == 0) {
-                  echo "<a class='nav-link active' aria-current='page' href='$link'>Users</a>
-                        <a class='nav-link active' aria-current='page' href='$link'>Horses</a>";
+                if (isset($_SESSION['role']) && $_SESSION['role'] == "Master") {
+                  echo "<a class='nav-link active' aria-current='page' href='http://localhost/Boddaert/admin/modules/users/index.php'>Users</a>";
+                  echo "<a class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'><i class='fa-solid fa-sign-out'> Logout</i></a>";
                 }
-                  echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
 
-                if ((isset($_SESSION['won'])) && $_SESSION['won'] > 0){
+                if ((isset($SESSION['won'])) && $SESSION['won'] > 0){
                   "<li style='float: right'>";
                     echo "You won R".  $_SESSION['won'] ." in this session
                   </li>";
@@ -94,4 +100,4 @@
           </form> -->
         </div>
       </div>
-    </nav>    
+    </nav>

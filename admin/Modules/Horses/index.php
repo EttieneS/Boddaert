@@ -30,6 +30,10 @@
       $result = $horse->AddSelection();
       echo $result;
     }
+    if ($_POST['action'] == 'displaychart'){
+      $result = $horse->DisplayChart();
+      echo $result;
+    }
   } else {
     $horse->init();
   }
