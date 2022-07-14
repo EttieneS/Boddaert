@@ -1,14 +1,14 @@
-<script src='script/horses.js'></script>";
+<script src='script/horses.js'></script>
+
 <?php
   require_once("../../../config.php");
   require_once("Horse_class.php");
   require("../../Includes/header.php");
 
-  echo "<pre>" . print_r($_POST) . "</pre>";
   $horse = new Horse();
 
   if (isset($_POST['action'])){
-    if($_POST['action'] == "addNew"){
+    if ($_POST['action'] == "addNew"){
       $horse->addNew($_POST['db']);
     }
     if ($_POST['action'] == 'addrecord'){
@@ -26,15 +26,13 @@
     if ($_POST['action'] == 'viewmodal'){
       $result = $horse->View($_POST['db']);
     }
-    if ($_POST['action'] == 'saveselection'){      
+    if ($_POST['action'] == 'saveselection'){
       $result = $horse->AddSelection();
       echo $result;
     }
   } else {
     $horse->init();
   }
-
-  CreateAddEditModal("");
 
   include("../../Includes/footer.php");
 ?>

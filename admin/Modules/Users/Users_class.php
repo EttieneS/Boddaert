@@ -1,7 +1,9 @@
-<script href='script/users.js'></script>"
+<script href='script/users.js'></script>
 <?php
   require_once("../../../config.php");
   require_once("../../Libraries/Elements/Elements.php");
+
+  echo "</pre>" . print_r($_POST) . "</pre>";
 
   class User {
     var $username="";
@@ -85,12 +87,17 @@
     }
 
     function addNew($db, $id=""){
-      $body = GetAddEditForm($db,$id);
+      $restrictedstring = "id, access_rights";
+
+      $buttons = $this->GetRoles();
+
+      $body = GetAddEditForm($db, $restrictedstring, $buttons, $id);
+
       echo CreateAddEditModal($body);
       echo "<script>
-            $(document).ready(function(){
-              $('#AddEditModal').modal('show');
-            });
+              $(document).ready(function(){
+                $('#AddEditModal').modal('show');
+              });
             </script>";
     }
 
@@ -167,16 +174,16 @@
     function AddUser() {
       $username = $_POST['username'];
       $password = $_POST['password'];
+      $rights = $_POST['access_rights'];
 
       $salt = "x234";
-
       $pwd_salted = hash_hmac("sha256", $password, $salt);
 
       $sql = "INSERT INTO
         users
-        (username, password)
+        (username, password, access_rights)
         VALUES
-        ('$username', '$pwd_salted')";
+        ('$username', '$pwd_salted', '$access_rights')";
 
       $result = runSQL($sql);
       $_POST['action']= '';
@@ -212,6 +219,21 @@
       $result = runSQL($sql);
       $_POST = '';
       echo header('Location: index.php');
+    }
+
+    function GetRoles() {
+      $sql = "";
+
+      $selections = "<select>";
+
+      $roles = array("<option value='Master'>Master</option>",
+                      "<option value='Staff'>Staff</option>");
+      foreach($roles as $options){
+          $selections .= $options;
+      }
+
+      $selections .= "</select";
+      return $selections;
     }
 }
 ?>

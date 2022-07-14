@@ -21,6 +21,7 @@
       $buttons = array("select", "saveselection");
 
       $table = createTable($sql, $tablename, $restrictedarray, $buttons);
+      $table .= CreateAddEditModal("");
       echo $table;
     }
 

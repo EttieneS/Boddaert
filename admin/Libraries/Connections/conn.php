@@ -23,16 +23,31 @@
     return $result;
   }
 
+  // function getDBColumnsv2($tablename, $restrictedarray){
+  //   $showcolumns = "SHOW COLUMNS FROM $tablename";
+  //   $data = runSQL($showcolumns);
+  //   $headings = $data->fetch_assoc();
+  //   $headingsarray = array();
+  //
+  //   foreach($headings as $heading){
+  //     if(!(in_array($heading, $restrictedarray))){
+  //       array_push($headingsarray, $heading);
+  //     }
+  //   }
+  //
+  //   return $headingsarray;
+  // }
+
   function getDBColumns($table, $fields){
     if($fields != ""){
       $fields = explode(",", $fields);
-      print_r($fields);
 
       foreach($fields as $field){
         $newFields[] = "'". $field ."'";
       }
 
       $fields = implode(",",$newFields);
+
       $sql = "SHOW COLUMNS FROM $table WHERE Field NOT IN ($fields)";
     }else{
       $sql = "SHOW COLUMNS FROM $table";

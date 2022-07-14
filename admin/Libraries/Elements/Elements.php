@@ -47,6 +47,11 @@
   }
 
   function createTable($sql, $tablename, $restrictedarray="", $buttons=""){
+    if (($_SESSION['userid'] = '') || session_status() != PHP_SESSION_ACTIVE){
+      session_start();
+    }
+
+    $userid = $_SESSION['userid'];
     $columns = getDBColumns($tablename, $restrictedarray);
 
     $data = runSQL($sql);
@@ -98,8 +103,6 @@
     echo "  </table>";
           foreach($buttons as $button){
             if ($button == "saveselection"){
-              $userid = $_SESSION['userid'];
-
               echo "  <button class='btn btn-primary' type='submit' id='submitBtn' name='action' value='saveselection'>Save Selection</button>
                       <input type='hidden' type='text' id='id' name='id' value='$userid' >
                     </form>";
@@ -167,51 +170,62 @@
               }
     echo   "</div>
             <div class='modal-footer'>
-              <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='CloseAddEditModal()'>Close</button>
+              <button  type='button' class='btn btn-secondary' data-dismiss='modal' onclick='CloseAddEditModal()'>Close</button>
+              <button  type='button' class='btn btn-secondary' data-dismiss='modal' onclick='CloseAddEditModal()'>Close</button>
             </div>
           </div>
         </div>
       </div>";
   }
 
-  function GetAddEditForm($db,$id=''){
-    $id = $_POST['id'];
-    $sql = "";
-    $column = "";
-    $action = $_POST['action'];
-
-    $body = "<form method='post'>";
-
-    if ($action == 'editmodal'){
-      $id = $_POST['id'];
-      $sql = "SELECT * FROM " . $db . " WHERE id = " . $id;
-      $body .= "<input type='hidden' id='id' name='id' value='$id' >";
-
-      $columns = runSQL($sql);
-      $column = $columns->fetch_assoc();
-    }
-
-    $restrictedstring = "id";
-    $headings = getDBColumns($db, $restrictedstring);
-
-    foreach($headings as $heading){
-      $name = $heading['Field'];
-      $body .= Label($name) . '</br>';
-      if ($action == 'addNew') {
-          $body .= "<input id='$name' name='$name' ></br>";
-      } else if($action == 'editmodal') {
-        $body .= "<input id='$name' name='$name' value='$column[$name]'></br>";
-      }
-    }
-
-    if ($action == 'addNew' ){
-      $body .= "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='addrecord'>Save Record</button>";
-    } else {
-      $body .= "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='updaterecord'>Update Record</button>";
-    }
-    $body .= "</form>";
-
+  function GetAddEditForm($db, $restrictedstring, $buttons, $id){
+    // if ($_POST['id'] != null || $_POST['id'] = ''){
+    //   $id = $_POST['id'];
+    // }
+    // $restrictedstring = "id";
+    // $restrictedarray = implode(",", $restrictedstring);
+    // print_r($restrictedarray);
+    // $sql = "";
+    // $column = "";
+    // $action = $_POST['action'];
+    //
+    // $body = "<form method='post'>";
+    //
+    // if ($action == 'editmodal'){
+    //   $id = $_POST['id'];
+    //   $sql = "SELECT * FROM " . $db . " WHERE id = " . $id;
+    //   $body .= "<input type='hidden' id='id' name='id' value='$id' >";
+    //
+    //   $columns = runSQL($sql);
+    //   $column = $columns->fetch_assoc();
+    // }
+    //
+    // $headings = getDBColumnsv2($db, $restrictedarray);
+    //
+    // foreach($headings as $heading){
+    //   $name = $heading['Field'];
+    //   $body .= Label($name) . '</br>';
+    //   if ($action == 'addNew') {
+    //       $body .= "<input id='$name' name='$name' ></br>";
+    //   } else if($action == 'editmodal') {
+    //     $body .= "<input id='$name' name='$name' value='$column[$name]'></br>";
+    //   }
+    // }
+    //
+    // if ($buttons != ''){
+    //   $body .= $buttons;
+    // }
+    //
+    // if ($action == 'addNew' ){
+    //   $body .= "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='addrecord'>Save Record</button>";
+    // } else {
+    //   $body .= "<button type='submit' class='btn btn-primary' id='saveBtn' name='action' value='updaterecord'>Update Record</button>";
+    // }
+    // $body .= "</form>";
+    //
+    $body = "<p>Add Edit form</p>";
     return $body;
+
   }
 
   function GetViewForm($db, $id){

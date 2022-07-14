@@ -10,8 +10,7 @@
 
     function __construct() {}
 
-    function init() {
-      //CONCAT(u.username," ", u.surname)
+    function init() {      
       $sql = "SELECT s.id, u.username as 'User Name', s.selection as 'Selection' FROM selections s
           LEFT JOIN users u ON u.id = s.userid";
 
@@ -28,6 +27,10 @@
       $table = createJoinTable($sql, $tablename, $headings, $buttons);
 
       echo $table;
+
+      CreateAddEditModal("");
+
+      include("../../Includes/footer.php");
     }
 
     function ViewAllTable() {

@@ -1,4 +1,4 @@
-"<script src='script/selections.js'></script>";
+<script src='script/selections.js'></script>
 
 <?php
   require_once("../../../config.php");
@@ -6,10 +6,8 @@
   require("../../Includes/header.php");
   require_once("../../Libraries/Elements/Elements.php");
 
-  echo "<pre>" . print_r($_POST) . "</pre>";
-
   $selection = new Selections();
-  
+
   if (isset($_POST['action'])){
     if($_POST['action'] == "addNew"){
       $selection->addNew($_POST['db']);
@@ -33,13 +31,10 @@
 
       echo header('Location: index.php');
     }
-    if ($_POST['action'] == 'viewmodal'){      
+    if ($_POST['action'] == 'viewmodal'){
       $result = $selection->View($_POST['db']);
     }
   } else {
     $selection->init();
   }
-  CreateAddEditModal("");
-
-  include("../../Includes/footer.php");
 ?>

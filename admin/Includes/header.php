@@ -25,7 +25,6 @@
     <?php
         require_once("../../../config.php");
         require_once("session_handler.php");
-        require_once("../../Modules/Wallets/Wallet_class.php");
     ?>
 
     <nav class="navbar navbar-expand-lg bg-light">
@@ -37,12 +36,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <?php
+                if (session_status() != PHP_SESSION_ACTIVE){
+                  session_start();
+                }
+
                 $url = "http://localhost/Boddaert/admin/Modules/";
                 $sql = "SELECT * FROM modules WHERE is_active='Yes'";
                 $result = runSQL($sql);
-
-                $wallet = new Wallet();
-                $_SESSION['wallet'] = $wallet->GetBalance();
 
                 while($row = $result->fetch_assoc()){
                     $modulename = ucfirst($row['name']);
@@ -57,12 +57,15 @@
                 }
                   echo "<a <button class='btn btn-danger' aria-current='page' href='' onclick='LogOut()' style='float: right'>Logout</button></a>";
 
-                if ($_SESSION['won'] > 0){
+                if ((isset($_SESSION['won'])) && $_SESSION['won'] > 0){
                   "<li style='float: right'>";
                     echo "You won R".  $_SESSION['won'] ." in this session
                   </li>";
                 }
 
+                // if(isset($_SESSION['userid'])){
+                //     $userid = $_SESSION['userid'];
+                // }
             ?>
               <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -91,5 +94,4 @@
           </form> -->
         </div>
       </div>
-    </nav>
-    </body>
+    </nav>    

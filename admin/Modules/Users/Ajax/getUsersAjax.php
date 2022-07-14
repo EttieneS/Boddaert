@@ -18,8 +18,7 @@
           if($pwd_salted === $row['password']){
             session_start();
               $_SESSION["logged_in"] = true;
-              $_SESSION['userid'] = $row['id'];
-              $_SESSION["wallet"] = 200;
+              $_SESSION['userid'] = $row['id'];              
               $_SESSION["log_in_time"] = date("h:i:sa");
 
               echo "true";
